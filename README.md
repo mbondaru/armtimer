@@ -3,6 +3,7 @@
 Raspberry Pi 3 Model B ARM Timer FIQ module (Linux RaspberryPi 4.19.71-rt24-v7+ SMP PREEMPT RT)
 
 In order to get the FIQ exception to work with the ARM Timer (broadcom spec pg. 196 "Timer (ARM side)"), do the following:
+##Warning: this will require us to build a custom kernel driver (module) for a custom compiled real-time Linux kernel, so no stdio.h, printf, not even an mmap() will be used throughout the source code. We are using linux source files and headers for low-level memory access in order to inject the FIQ service routine that we write in ARM assembly language into the low-addresses (0x00000000) of Physical memory (RAM). Linux GUI interface will most likely freeze at sufficiently high FIQ interrupt frequency but the FIQ will be doing its job on the bare-metal peripherals and GPIO.
 
 1) Download the rpi-4.19y-rt kernel source files (git clone)
    
