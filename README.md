@@ -84,7 +84,7 @@ dwc_otg.fiq_fsm_enable=0 dwc_otg.fiq_enable=0
 
 in order to prevent the USB driver (the way it is coded) from claiming the FIQ early during start-up (Only one interrupt source can be wired to the FIQ, it is the highest priority interrupt).
 
-#Reboot again for these changes to take place
+## Reboot again for these changes to take place
 
 10) Overclocking is useful to speed up the FIQ handling between high-frequency timer firings. For more predictable delays of the FIQ service routine, overclock the board by adding the following two settings in the /boot/config.txt:
     
