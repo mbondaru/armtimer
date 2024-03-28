@@ -3,7 +3,7 @@ Raspberry Pi 3 Model B ARM Timer FIQ module (Linux RaspberryPi 4.19.71-rt24-v7+ 
 In order to get the FIQ exception to work with the ARM Timer (broadcom spec pg. 196 "Timer (ARM side)"), do the following:
 1) Download the rpi-4.19y-rt kernel source files (git clone)
 2) In the arch/arm/kernel/fiq.c change the following line:
-```
+<pre>
 ...
 void set_fiq_handler(void *start, unsigned int length)
 {
@@ -14,10 +14,10 @@ void set_fiq_handler(void *start, unsigned int length)
          if (!cache_is_vipt_nonaliasing())
                  flush_icache_range((unsigned long)base + offset, offset +
                                     length);
-         **flush_icache_range(0xffff0000 + offset, 0xffff0000 + offset + length);**
+         <b>flush_icache_range(0xffff0000 + offset, 0xffff0000 + offset + length);</b>
  }
 ...
-```
+</pre>
 to
 ```
 flush_icache_range(0x00000000 + offset, 0x00000000 + offset + length);
