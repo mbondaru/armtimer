@@ -30,13 +30,13 @@ And this should write the FIQ routine into the correct place in the Vector table
 
 3) In the arch/arm/Kconfig add the following line:
 
-```
+<pre>
 ...
 config FIQ
          bool
-         **default y**
+         <b>default y</b>
 ...
-```
+</pre>
 
 4) Run the 'make bcm2709_defconfig' command or other default config if you are doing this on a Raspberry Pi board other than Raspberry Pi 3 Model B Rev 1.2.
    
@@ -86,9 +86,11 @@ in order to prevent the USB driver (the way it is coded) from claiming the FIQ e
 #Reboot again for these changes to take place
 
 10) Overclocking is useful to speed up the FIQ handling between high-frequency timer firings. For more predictable delays of the FIQ service routine, overclock the board by adding the following two settings in the /boot/config.txt:
+    
 ```
 force_turbo=1
 core_freq=472
 ```
+
 This makes Raspberry Pi 3 Model B board arm (CPU) clock run at 1200MHz and core clock (the one used by ARM Timer) run at 472MHz. You can confirm the clock frequencies that your CPU runs at by running the commands `vcgencmd measure_clock arm` and `vcgencmd measure_clock core`. Core clock is the VideoCore IV proprietary co-processor clock, which also drives peripherals like the ARM Timer. Also, force_turbo option, when enabled, disables the ARM CPU clock frequency throttling based on CPU chip temperature. Avoid running all 4 cores at 100% with this setting (you can check by running the `htop` command) as it will very quickly melt the CPU chip. You can check the current CPU chip temperature of the Raspberry Pi 3 Model B by running the command `vcgencmd measure_temp`.
 
