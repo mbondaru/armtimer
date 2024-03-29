@@ -236,10 +236,10 @@ int init_sp804(void)
    }
    regs.ARM_r8 = (long) gpiobase; 
    regs.ARM_r9 = (long) timerbase;
-   regs.ARM_r10 = (long) sine_comms;
+   regs.ARM_r10 = (long) sine_comms[0];/*r10=next_sine*/
    regs.ARM_fp = (long) 0; /* r11=count */
-   regs.ARM_ip = (long) 0; /* r12=sine_index */
-   regs.ARM_sp = (long) &fiqstack[sizeof(fiqstack)];
+   regs.ARM_ip = (long) 0; /* r12=scratchpad */
+   regs.ARM_sp = (long) 0; /* r13=sine_index */
    set_fiq_regs(&regs);
    set_fiq_handler(&sp804_handler, &sp804_handler_end - &sp804_handler);
    /* DAC D6 */ 
