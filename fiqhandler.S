@@ -1,27 +1,24 @@
 .text
+.align 5 ; Align code to cache line
 .global sp804_handler
 .global sp804_handler_end
+
+;setup r13 to point to SineTable
 sp804_handler:
-   ands r12, r11, #1
+   eors r11, r11, #1
    mov r12, #0x04000000
    str r12, [r9, #0x0C]
    beq CountEven
-   add r12, r12, #0xFF
+   orr r12, r12, #0xFF
    str r12, [r8, #0x28]
-   add r11, r11, #1
-   str r10, [r8, #0x1C]
-   mov r12, #0x100
-   add r12, r12, #0x67
-   cmp r13, r12
-   addlo r13, r13, #1
-   subeq r13, r13, r12
+   str r10, [r8, #0x1C] 
    subs pc, lr, #4
 CountEven:
+   ldrb r10, [r13], #1
    str r12, [r8, #0x1C]
-   add r11, r11, #1
-   adr r12, SineTable
-   add r12, r12, r13
-   ldrb r10, [r12]
+   adr r12, SineTableEnd
+   cmp r13, r12
+   adreq r13, SineTable
    subs pc, lr, #4
 SineTable:
 .word 0x28282726
@@ -114,4 +111,5 @@ SineTable:
 .word 0x20201F1E
 .word 0x23222221
 .word 0x26252424
+SineTableEnd
 sp804_handler_end: 
