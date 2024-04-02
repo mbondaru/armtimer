@@ -216,7 +216,46 @@ Copy:
    msr cpsr_c, r0
    ldr sp, =0x8000
 
-   bl _cstartup
+_setup_fiq:
+   mrs r1, cpsr
+   mov r2, #0xD1
+   msr cpsr_c, r2
+   mov r0, r0
+   ldr r8, =0x3F200000
+   ldr r9, =0x3F00B400
+   mov r10, #0x28
+   mov r11, #0
+   mov r12, #0
+   mov r13, #0
+   msr cpsr_c, r1
+   orr r1, r1, #0x80
+   bic r1, r1, #0x40
+   msr cpsr_c, r1
+
+_setup_timer:
+   ldr r4, =0x3F200000
+   ldr r5, =0x3F00B400
+   ldr r6, =0x3F00B200
+   mov r0, #0
+   str r0, [r5, #0x08]
+   str r0, [r5, #0x1C]
+   str r0, [r6, #0x0C]
+   mov r0, #1
+   str r0, [r5, #0x0C]
+   ldr r0, =0x00249249
+   str r0, [r4]
+   mov r0, #0x00040000
+   str r0, [r4, #0x08]
+   ldr r0, =0x040000FF
+   str r0, [r4, #0x28]
+   mov r0, #8
+   str r0, [r5]
+_enable_timer_fiq:
+   mov r0, #0xC0
+   str r0, [r6, #0x0C]
+_enable_timer:
+   mov r0, #0xA0
+   str r0, [r5, #0x08]
 
 _inf_loop:
    b _inf_loop
@@ -233,21 +272,3 @@ _enable_interrupts:
    cpsie i
 
    mov pc, lr
-
-_setup_fiq:
-   mrs r1, cpsr
-   mov r2, #0xD1
-   msr cpsr_c, r2
-   mov r0, r0
-   ldr r8, =0x20200000
-   ldr r9, =0x2000B400
-   mov r10, #0x28
-   mov r11, #0
-   mov r12, #0
-   mov r13, #0
-   ldr r14, =__fiq_exit
-   msr cpsr_c, r1
-   orr r1, r1, #0x80
-   bic r1, r1, #0x40
-   msr cpsr_c, r1
-   
