@@ -7,6 +7,52 @@ _start:
    cmp r1, #0
    bne _halt
 
+   mov r0, #0x00100000
+   mov r1, #0
+   ldr r2, =0xFFF00000
+   mov r8, #0x4000
+   mov r7, #0xC00
+mmu_section:
+   lsr r3, r1, #20
+   lsl r3, r3, #2
+   orr r3, r3, r8
+   and r4, r1, r2
+   orr r4, r4, r7
+   orr r4, r4, #0x0A
+   str r4, [r3]
+   add r1, r1, r0
+   cmp r1, r2
+   bne mmu_section
+   
+   ldr r1, =0x3F200000
+   lsr r3, r1, #20
+   lsl r3, r3, #2
+   orr r3, r3, r8
+   and r4, r1, r2
+   orr r4, r4, r7
+   orr r4, r4, #0x02
+   str r4, [r3]
+  
+enable_mmu:
+   mov r2, #0
+   mov r3, #0x1000
+   orr r3, r3, #0x5
+   mcr p15, 0, r2, c7, c7, 0
+   mcr p15, 0, r2, c8, c7, 0
+   mcr p15, 0, r2, c7, c10, 4
+
+   mvn r2, #0
+   bic r2, #0x0C
+   mcr p15, 0, r2, c3, c0, 0
+
+   mcr p15, 0, r8, c2, c0, 0
+   mcr p15, 0, r8, c2, c0, 1
+
+   mrc p15, 0, r2, c1, c0, 0
+   orr r2, r2, r3
+   mcr p15, 0, r2, c1, c0, 0
+
+enable_caches:
    mrs r0, cpsr
    bic r0, r0, #0x1F
    orr r0, r0, #0x13
@@ -38,10 +84,11 @@ _start:
    mcr p15, 0, r1, c1, c1, 0
 
    mrc p15, 0, r2, c1, c0, 0
+   orr r2, #0x0004
    orr r2, #0x1000
    orr r2, #0x0800
    mcr p15, 0, r2, c1, c0, 0
-
+ 
    ldr r0, =0x3F200000
    mov r1, #1
    lsl r1, #18
