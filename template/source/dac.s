@@ -232,24 +232,34 @@ _setup_timer:
    ldr r6, =0x3F00B200
    mov r0, #0
    str r0, [r5, #0x08]
+   dsb
    str r0, [r5, #0x1C]
+   dsb
    str r0, [r6, #0x0C]
+   dsb
    mov r0, #1
    str r0, [r5, #0x0C]
+   dsb
    ldr r0, =0x00249249
    str r0, [r4]
+   dsb
    mov r0, #0x00040000
    str r0, [r4, #0x08]
+   dsb
    ldr r0, =0x040000FF
    str r0, [r4, #0x28]
+   dsb
    mov r0, #8
    str r0, [r5]
+   dsb
 _enable_timer_fiq:
    mov r0, #0xC0
    str r0, [r6, #0x0C]
+   dsb
 _enable_timer:
    mov r0, #0xA0
    str r0, [r5, #0x08]
+   dsb
 
 _inf_loop:
    b _inf_loop
