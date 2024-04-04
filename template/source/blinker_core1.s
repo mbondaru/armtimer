@@ -111,7 +111,7 @@ _secondary_cores:
    and r1, r1, #3
    cmp r1, #1
    bne _halt
-   enable_caches
+   b enable_caches
    
 _halt:
    wfe
