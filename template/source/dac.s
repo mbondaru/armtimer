@@ -151,9 +151,6 @@ enable_caches:
    msr ELR_hyp, r0
    eret
 
-@Set VBAR
-   mov r0, #0x8000
-   mrc p15, 0, r0, c12, c0, 0
 
 @Init caches
    mov r12, #0
@@ -187,6 +184,9 @@ enable_caches:
    mrc p15, 0, r1, c1, c1, 0
    bic r1, r1, #1
    mcr p15, 0, r1, c1, c1, 0
+@Set VBAR
+   mov r0, #0x8000
+   mrc p15, 0, r0, c12, c0, 0
 @ACTIVATE MMUNU
    mov r0, #0x0
    mcr p15, 0, r0, c2, c0, 2
