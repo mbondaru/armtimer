@@ -186,7 +186,7 @@ enable_caches:
    mcr p15, 0, r1, c1, c1, 0
 @Set VBAR
    mov r0, #0x8000
-   mrc p15, 0, r0, c12, c0, 0
+   mcr p15, 0, r0, c12, c0, 0
 @ACTIVATE MMUNU
    mov r0, #0x0
    mcr p15, 0, r0, c2, c0, 2
@@ -232,34 +232,24 @@ _setup_timer:
    ldr r6, =0x3F00B200
    mov r0, #0
    str r0, [r5, #0x08]
-   dsb
    str r0, [r5, #0x1C]
-   dsb
    str r0, [r6, #0x0C]
-   dsb
    mov r0, #1
    str r0, [r5, #0x0C]
-   dsb
    ldr r0, =0x00249249
    str r0, [r4]
-   dsb
    mov r0, #0x00040000
    str r0, [r4, #0x08]
-   dsb
    ldr r0, =0x040000FF
    str r0, [r4, #0x28]
-   dsb
    mov r0, #8
    str r0, [r5]
-   dsb
 _enable_timer_fiq:
    mov r0, #0xC0
    str r0, [r6, #0x0C]
-   dsb
 _enable_timer:
    mov r0, #0xA0
    str r0, [r5, #0x08]
-   dsb
 
 _inf_loop:
    b _inf_loop
