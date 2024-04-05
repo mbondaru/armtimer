@@ -10,30 +10,21 @@ _start:
    ldr pc, =_unused_handler_h
    ldr pc, =_interrupt_vector_h
 _fiq_start:
-   ands r12, r11, #1
    mov r12, #0x04000000
    str r12, [r9, #0x0C]
-   dmb
-   beq CountEven
-   orr r12, r12, #0xFF
+   add r12, r12, #0xFF
    str r12, [r8, #0x28]
-   dmb
-   add r11, r11, #1
    str r10, [r8, #0x1C]
-   dmb
    mov r12, #0x100
-   orr r12, r12, #0x67
+   add r12, r12, #0x67
    cmp r13, r12
    addlo r13, r13, #1
    subeq r13, r13, r12
-   subs pc, lr, #4
-CountEven:
+   mov r12, #0x04000000
    str r12, [r8, #0x1C]
-   dmb
-   add r11, r11, #1
-   adr r12, SineTable
-   add r12, r12, r13
-   ldrb r10, [r12]
+   mov r12, #0x10000
+   add r12, r13, LSL #2
+   ldr r10, [r12]
    subs pc, lr, #4
 SineTable:
 .word 0x28282726
@@ -215,6 +206,20 @@ enable_caches:
    orr r1, r1, #1
    mcr p15, 0, r1, c1, c1, 0
  
+_copy_sines:
+   mov r2, #0x100
+   add r2, r2, #0x68
+   mov r0, #0x10000
+   adr r1, SineTable
+   mov r3, #0
+_copy_sine:
+   lsl r5, r3, #2
+   ldrb r4, [r1, r3]
+   str r4, [r0, r5]
+   add r3, r3, #1
+   cmp r3, r2
+   bne _copy_sine
+
 _setup_fiq:
    mrs r1, cpsr
    mov r2, #0xD1
@@ -246,7 +251,7 @@ _setup_timer:
    str r0, [r4, #0x08]
    ldr r0, =0x040000FF
    str r0, [r4, #0x28]
-   mov r0, #8
+   mov r0, #16
    str r0, [r5]
 _enable_timer_fiq:
    mov r0, #0xC0
