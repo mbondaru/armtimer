@@ -3,59 +3,29 @@
 #include "armctl.h"
 #include "armtimer.h"
 #include "dac.h"
-#include "irqctrl.h"
+#include "isp.h"
+#include "aux.h"
+#include "unistd.h"
 
 volatile unsigned int *ugpio = 0;
 volatile unsigned int *upads = 0;
 volatile unsigned int *ucm = 0;
 volatile unsigned int *uarmctl = 0;
 volatile unsigned int *uarmtimer = 0;
-volatile unsigned int *uirqctrl = 0;
-volatile unsigned int *uvt = 0;
+volatile unsigned int *uisp = 0;
+volatile unsigned int *uaux = 0;
 
 #define P1 ((GPIO_Type *) ugpio)
 #define PADS ((GPIO_Pads_Control_Type *) upads)
 #define CM ((CM_Type *) ucm)
 #define ARMCTL ((ARM_Control_Logic_Module_Type *) uarmctl)
 #define ARMTIMER ((ARMTimer_Type *) uarmtimer)
-#define IRQCTRL ((Interrupt_Controller_Type *) uirqctrl)
-#define VT ((Vector_Table_Type *) uvt)
-/*
-   @brief The undefined instruction interrupt handler
+#define ISP ((ISP_Type *) uisp)
+#define AUX ((AUX_Type *) uaux)
 
-   If an undefined instruction is encountered, the CPU will start
-   executing this function. Just trap here as a debug solution
-
-*/
-void __attribute((interrupt("UNDEF"))) undefined_instruction_vector(void)
-{
-   while(1)
-   {
-      /*do nothing*/
-   }
-}
-
-void __attribute__((interrupt ("IRQ"))) hardware_interrupt_vector(void)
-{
-
-}
 int main(int argc, char *argv[])
 {
-   /* APB (Core_clk) freq = 470560000 */
-   uint32_t armtimer_load_value = 16;
-   register int sine_index = 0;
    int i;
-   uint32_t sine;
-   uint8_t sine_comms[SINE_TABLE_SIZE];
-   printf("Generating 360-entry sine table...\n");
-   for(i = 0; i < SINE_TABLE_SIZE; i++)
-   {
-      sine = DAC_14BIT_0_5V +
-         (float)(DAC_14BIT_0_5V*sin(PI*i/180));
-      sine_comms[i] = (sine >> 6);
-      printf("i: %d ", sine_comms[i]);
-   }
-   printf("\n");
    /* Gain access to GPIO registers */
    gpio_init(&ugpio);
    /* Gain access to GPIO drive control registers */
@@ -66,23 +36,44 @@ int main(int argc, char *argv[])
    armctl_init(&uarmctl);
    /* Gain access to ARM Timer registers */
    armtimer_init(&uarmtimer);
-   /* Gain access to IRQ register */
-   irqctrl_init(&uirqctrl);
-   vt_init(&uvt);
+   isp_init(&uisp);
+   aux_init(&uaux);
 
    gpio_print(P1);
    pads_print(PADS);
    cm_print(CM);
    armctl_print(ARMCTL);
    armtimer_print(ARMTIMER);
-   irqctrl_print(IRQCTRL);
-   vt_print(VT);
+   isp_print(ISP);
+   aux_print(AUX);
+   
+   gpio_set_func(GPIO_PIN14, GPIO_FUNC_ALT5, P1);
+   gpio_set_func(GPIO_PIN15, GPIO_FUNC_ALT5, P1);
+   P1->GPPUD = 0;
+   //for(i = 0; i < 1500000; i++);
+   nanosleep(100000000);
+   P1->GPPUDCLK0 = GPIO_GPPUDCLK014 | GPIO_GPPUDCLK015;
+   //for(i = 0; i < 1500000; i++);
+   nanosleep(100000000);
+   P1->GPPUDCLK0 = 0;
+   AUX->AUX_ENABLES = 1;
+   AUX->AUX_MU_IER_REG = 0;
+   AUX->AUX_MU_CNTL_REG = 0;
+   AUX->AUX_MU_LCR_REG = 3;
+   AUX->AUX_MU_MCR_REG = 0;
+   AUX->AUX_MU_IIR_REG = 0xC6;
+   AUX->AUX_MU_BAUD_REG = ((400000000/115200)/8)-1;
+   AUX->AUX_MU_LCR_REG = 0x03;
+   AUX->AUX_MU_CNTL_REG = 3;
+   AUX->AUX_MU_IO_REG = 'I';
+   while(1)
+   {
+       
+   }
 
-   /* Seemingly didn't do anything */
-   /*set_coretimer_src_apb_clock(ARMCTL);*/
-   /*Inspect the registers and stop */
-   while(1);
-   armtimer_set_predivider(0, ARMTIMER);
+
+   /* Set GPIO4 to ALT0 (GPIOCLK0) */
+   gpio_set_func(GPIO_PIN20, GPIO_FUNC_ALT5, P1);
 
    /* DAC D6 */ 
    gpio_set_func(GPIO_PIN0, GPIO_FUNC_OUTPUT, P1);
@@ -149,29 +140,22 @@ int main(int argc, char *argv[])
    gpio_set_func(GPIO_PIN26, GPIO_FUNC_OUTPUT, P1);
    P1->GPCLR0 |= GPIO_GPCLR026;
 
-   /* Set GPIO20 to ALT5 (GPIOCLK0) */
-   /*
-   gpio_set_func(GPIO_PIN20, GPIO_FUNC_ALT5, P1);
-   cm_gpclk0_29_5_MHz(CM);
-   */
+   /*cm_gpclk0_29_5_MHz(CM);*/
    printf("GPLEV0 = 0x%X\n", P1->GPLEV0);
 
    armtimer_disable(ARMTIMER);
    /*armtimer_enable(armtimer_load_value, ARMTIMER);*/
    while(1)
    {
-      /*if(!(ARMTIMER->IRQ_RAW))
+      if(!(ARMTIMER->IRQ_RAW))
       {
          continue;
       }
       else
-      {*/
+      {
          P1->GPSET0 = (1 << GPIO_PIN26);
-         ARMTIMER->IRQ_CLR_ACK = CLEAR_IRQ;
-         P1->GPCLR0 = 0xFF;
-         P1->GPSET0 = sine_comms[sine_index];
-         sine_index = (sine_index + 1) % SINE_TABLE_SIZE;
          P1->GPCLR0 = (1 << GPIO_PIN26);
+      }
    }
    /*set_pads_0_27_moderate_drive_strength();*/
    return 0;

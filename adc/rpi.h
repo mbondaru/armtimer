@@ -114,8 +114,492 @@ typedef enum IRQn
 /* GPIO Pads drive control */
 #define GPIO_PADS_CTL_BASE ((uint32_t) PERIPH_BASE + 0x00100000)
 
+#define SMI_BASE ((uint32_t) PERIPH_BASE + 0x00600000)
+
+#define VC4_BASE ((uint32_t) PERIPH_BASE + 0x00C00000)
+#define PIXVALVE0_BASE ((uint32_t) PERIPH_BASE + 0x00206000)
+#define PIXVALVE1_BASE ((uint32_t) PERIPH_BASE + 0x00207000)
+#define PIXVALVE2_BASE ((uint32_t) PERIPH_BASE + 0x00807000)
+/* VEC encoder */
+#define VEC_BASE ((uint32_t) PERIPH_BASE + 0x00806000)
+#define HDMI_BASE ((uint32_t) PERIPH_BASE + 0x00902000)
+/* Hardware Video Scaler */
+#define HVS_BASE ((uint32_t) PERIPH_BASE + 0x00400000)
+#define HVS_DLIST_START ((uint32_t) PERIPH_BASE + 0x00402000)
+#define HVS_DLIST_SIZE ((uint32_t) PERIPH_BASE + 0x00404000)
+/* Display Parallel Interface */
+#define DPI_BASE ((uint32_t) PERIPH_BASE + 0x00208000)
+/* Display Serial Interface */
+#define DSI_BASE ((uint32_t) PERIPH_BASE + 0x00209000)
 /* Peripheral register definitions */
 /* Device specific Peripheral register structures */
+#define ISP_BASE ((uint32_t) PERIPH_BASE + 0x00003000)
+
+typedef struct {
+   __IO uint32_t CTRL;
+   __IO uint32_t STATUS;
+   __IO uint32_t ID;
+   __IO uint32_t SYSTEM;
+   __IO uint32_t TILECTRL;
+   __IO uint32_t STATSADDR;
+   __IO uint32_t TILESTATUS;
+   __IO uint32_t TILEADDR;
+   __IO uint32_t DESCADDR;
+   __IO uint32_t DESCCTRL;
+   __IO uint32_t DESCSTATUS;
+   __IO uint32_t RESERVED0;
+   __IO uint32_t FR_SIZE;
+   __IO uint32_t FR_CTRL;
+   __IO uint32_t FR_BAYEREN;
+   __IO uint32_t FR_YCBCREN;
+   __IO uint32_t FR_OFF0;
+   __IO uint32_t FR_OFF1;
+   __IO uint32_t FR_SWOFF;
+   __IO uint32_t FR_MOSAIC;
+   __IO uint32_t RESERVED1[3];
+   __IO uint32_t FR_FIF00;
+   __IO uint32_t FR_FIF01;
+   __IO uint32_t RESERVED2[10];
+   __IO uint32_t WG_RED;
+   __IO uint32_t WG_BLUE;
+   __IO uint32_t WG_OFFSETG;
+   __IO uint32_t WG_GAIN;
+   __IO uint32_t WG_THRESH;
+   __IO uint32_t WG_OFFSETR;
+   __IO uint32_t WG_OFFSETB;
+   __IO uint32_t RESERVED3;
+   __IO uint32_t YG_MATRIX;
+   __IO uint32_t RESERVED4[4];
+   __IO uint32_t YG_OFFSET;
+   __IO uint32_t RESERVED5[2];
+   __IO uint32_t YG_Y;
+   __IO uint32_t YG_SCALE;
+   __IO uint32_t RESERVED6[10];
+   __IO uint32_t II_CTRL;
+   __IO uint32_t II_ADDR;
+   __IO uint32_t II_ENDADDR;
+   __IO uint32_t II_DPCM;
+   __IO uint32_t II_FIFO;
+   __IO uint32_t RESERVED7[7];
+   __IO uint32_t DI_ADDR;
+   __IO uint32_t DI_ENDADDR;
+   __IO uint32_t RESERVED8[10];
+   __IO uint32_t BL_ABSC_R;
+   __IO uint32_t RESERVED9[7];
+   __IO uint32_t BL_ABSC_GR;
+   __IO uint32_t RESERVED10[7];
+   __IO uint32_t BL_ABSC_B;
+   __IO uint32_t RESERVED11[7];
+   __IO uint32_t BL_ORD_SLOPE_R;
+   __IO uint32_t RESERVED12[15];
+   __IO uint32_t BL_ORD_SLOPE_GR;
+   __IO uint32_t RESERVED13[15];
+   __IO uint32_t BL_ORD_SLOPE_B;
+   __IO uint32_t RESERVED14[15];
+   __IO uint32_t BL_TB;
+   __IO uint32_t BL_LR;
+   __IO uint32_t BL_MT;
+   __IO uint32_t BL_SHIFT;
+   union {
+      __IO uint64_t BL_SUM;
+      struct {
+         __IO uint32_t BL_SUM_LO;
+         __IO uint32_t BL_SUM_HI;
+      };
+   };
+   __IO uint32_t BL_COUNT;
+   __IO uint32_t RESERVED15[13];
+   __IO uint32_t DP_HI_OFFSET;
+   __IO uint32_t RESERVED16[2];
+   __IO uint32_t DP_LO_OFFSET;
+   __IO uint32_t RESERVED17[8];
+   __IO uint32_t BL_ABSC_GB;
+   __IO uint32_t RESERVED18[15];
+   __IO uint32_t BL_ORD_SLOPE_GB;
+
+
+   __IO uint32_t RESERVED19[218];
+   __IO uint32_t TD_CTRL;
+   __IO uint32_t TD_STATUS;
+   __IO uint32_t TD_ADDR;
+   __IO uint32_t TD_DESC;
+   __IO uint32_t RESERVED20[9];
+   __IO uint32_t TD_INIT0;
+   __IO uint32_t TD_INIT1;
+   __IO uint32_t RESERVED21[7];
+   __IO uint32_t RS_CTRL;
+   __IO uint32_t RESERVED22[15]; 
+   __IO uint32_t LS_CTRL;
+   __IO uint32_t LS_OFFSETS;
+   __IO uint32_t RESERVED23[10];
+   __IO uint32_t XC_ABSC_LIM;
+   __IO uint32_t RESERVED24[3];
+   __IO uint32_t XC_ORD_LIM;
+   __IO uint32_t RESERVED25[3];
+   __IO uint32_t XC_SLOPE_LIM;
+   __IO uint32_t RESERVED26[23];
+   __IO uint32_t DN_CTRL;
+   __IO uint32_t DN_ABSC_GD;
+   __IO uint32_t RESERVED27[3];
+   __IO uint32_t DN_ORD_GD;
+   __IO uint32_t RESERVED28[3];
+   __IO uint32_t DN_SLOPE_GD;
+   __IO uint32_t RESERVED29[3];
+   __IO uint32_t DN_GAIN_GD;
+   __IO uint32_t DN_SHIFT_GD;
+   __IO uint32_t DN_OFFSET;
+   __IO uint32_t DN_ABSC_GN;
+   __IO uint32_t RESERVED30[3];
+   __IO uint32_t DN_ORD_GN;
+   __IO uint32_t RESERVED31[3];
+   __IO uint32_t DN_SLOPE_GN;
+   __IO uint32_t RESERVED32[3];
+   __IO uint32_t DN_CBCR_THRESH;
+   __IO uint32_t RESERVED33[55];
+   __IO uint32_t DM_CTRL;
+   __IO uint32_t RESERVED34[31];
+   __IO uint32_t YC_MATRIX;
+   __IO uint32_t RESERVED35[4];
+   __IO uint32_t YC_OFFSET;
+   __IO uint32_t RESERVED36[46];
+   __IO uint32_t GM_ABSC_R;
+   __IO uint32_t RESERVED37[7];
+   __IO uint32_t GM_ABSC_G;
+   __IO uint32_t RESERVED38[7];
+   __IO uint32_t GM_ABSC_B;
+   __IO uint32_t RESERVED39[7];
+   __IO uint32_t GM_ORD_R;
+   __IO uint32_t RESERVED40[7];
+   __IO uint32_t GM_ORD_G;
+   __IO uint32_t RESERVED41[7];
+   __IO uint32_t GM_ORD_B;
+   __IO uint32_t RESERVED42[43];
+   __IO uint32_t FC_Y_EDGE;
+   __IO uint32_t FC_Y_LO_OFFSET;
+   __IO uint32_t FC_Y_HI_OFFSET;
+   __IO uint32_t FC_THRESH;
+   __IO uint32_t RESERVED43[52];
+   __IO uint32_t HR_CTRL;
+   __IO uint32_t HR_SCALE_X;
+   __IO uint32_t HR_SCALE_Y;
+   __IO uint32_t HR_NORM;
+   __IO uint32_t RESERVED44[52];
+   __IO uint32_t LR_TSCALEX;
+   __IO uint32_t LR_TSCALEY;
+   __IO uint32_t LR_NORM_0_1;
+   __IO uint32_t LR_NORM_2_3;
+   __IO uint32_t LR_SHIFT;
+   __IO uint32_t RESERVED45[3];
+   __IO uint32_t CC_MATRIX;
+   __IO uint32_t RESERVED46[4];
+   __IO uint32_t CC_OFFSET;
+   __IO uint32_t RESERVED47[14];
+   __IO uint32_t ST_SHIFT;
+   __IO uint32_t ST_R_OFF;
+   __IO uint32_t RESERVED48[31];
+   __IO uint32_t ST_R_RECT;
+   __IO uint32_t RESERVED49[31];
+   __IO uint32_t ST_HMASK0;
+   __IO uint32_t RESERVED50;
+   __IO uint32_t ST_FOC_FILT;
+   __IO uint32_t RESERVED51[8];
+   __IO uint32_t ST_FILT_GAINS;
+   __IO uint32_t ST_FILT_TH;
+   __IO uint32_t RESERVED52;
+   __IO uint32_t ST_ROW_NUM;
+   __IO uint32_t ST_R_TH;
+   __IO uint32_t RESERVED53[2];
+   __IO uint32_t ST_G_TH;
+   __IO uint32_t RESERVED54[2];
+   __IO uint32_t ST_B_TH;
+   __IO uint32_t RESERVED55[2];
+   __IO uint32_t ST_R_G_TH;
+   __IO uint32_t RESERVED56[2];
+   __IO uint32_t ST_B_G_TH;
+   __IO uint32_t RESERVED57[2];
+   __IO uint32_t ST_GROUP_0_X;
+   __IO uint32_t RESERVED58[8];
+   __IO uint32_t ST_GROUP_0_Y;
+   __IO uint32_t RESERVED59[8];
+   __IO uint32_t ST_GRP0_CTRL;
+   __IO uint32_t ST_HGAIN0;
+   __IO uint32_t ST_HGAIN1;
+   __IO uint32_t RESERVED60[20];
+   __IO uint32_t LO_CTRL;
+   __IO uint32_t LO_COL_STRIDE1;
+   __IO uint32_t LO_COL_STRIDE2;
+   __IO uint32_t LO_ADDR1;
+   __IO uint32_t LO_ADDR2;
+   __IO uint32_t LO_ADDR3;
+   __IO uint32_t LO_STRIDE1;
+   __IO uint32_t LO_STRIDE2;
+   __IO uint32_t RESERVED61[136];
+   __IO uint32_t LS_CV;
+   __IO uint32_t RESERVED62[2303];
+   __IO uint32_t GM_SLOPE_R;
+   __IO uint32_t RESERVED63[15];
+   __IO uint32_t GM_SLOPE_G;
+   __IO uint32_t RESERVED64[15];
+   __IO uint32_t GM_SLOPE_B;
+   __IO uint32_t RESERVED65[31];
+   __IO uint32_t TM_Y_ABSC;
+   __IO uint32_t RESERVED66[15];
+   __IO uint32_t CP_CB_ABSC;
+   __IO uint32_t RESERVED67[7];
+   __IO uint32_t CP_CR_ABSC;
+   __IO uint32_t RESERVED68[7];
+   __IO uint32_t TM_Y_ORD_SLOPE;
+   __IO uint32_t RESERVED69[15];
+   __IO uint32_t CP_CB_ORD_SLOPE;
+   __IO uint32_t RESERVED70[7];
+   __IO uint32_t CP_CR_ORD_SLOPE;
+   __IO uint32_t RESERVED71[391];
+   __IO uint64_t DP_CLUSTER;
+} ISP_Type;
+
+typedef struct {
+   __IO uint32_t C;
+   __IO uint32_t ID;
+} DPI_Type;
+
+typedef struct {
+   __IO uint32_t CORE_REV;
+   __IO uint32_t SW_RESET_CONTROL;
+   __IO uint32_t HDMI_HOTPLUG_INT;
+   __IO uint32_t HDMI_HOTPLUG;
+   __IO uint32_t RESERVED0[5];
+   __IO uint32_t PACKET_STRIDE;
+   __IO uint32_t RESERVED1[13];
+   __IO uint32_t FIFO_CTL;
+   __IO uint32_t RESERVED2[12];
+   __IO uint32_t MAI_CHANNEL_MAP;
+   __IO uint32_t MAI_CONFIG;
+   __IO uint32_t MAI_FORMAT;
+   __IO uint32_t AUDIO_PACKET_CONFIG;
+   __IO uint32_t RAM_PACKET_CONFIG;
+   __IO uint32_t RAM_PACKET_STATUS;
+   __IO uint32_t CRP_CFG;
+   __IO uint32_t CTS_0;
+   __IO uint32_t CTS_1;
+   __IO uint32_t CTS_PERIOD_0;
+   __IO uint32_t CTS_PERIOD_1;
+   __IO uint32_t RESERVED3;
+   __IO uint32_t SCHEDULER_CONTROL;
+   __IO uint32_t HORZA;
+   __IO uint32_t HORZB;
+   __IO uint32_t VERTA0;
+   __IO uint32_t VERTB0;
+   __IO uint32_t VERTA1;
+   __IO uint32_t VERTB1;
+   __IO uint32_t RESERVED4[3];
+   __IO uint32_t CEC_CNTRL_1;
+   __IO uint32_t CEC_CNTRL_2;
+   __IO uint32_t CEC_CNTRL_3;
+   __IO uint32_t CEC_CNTRL_4;
+   __IO uint32_t CEC_CNTRL_5;
+   __IO uint32_t CEC_TX_DATA_1;
+   __IO uint32_t CEC_TX_DATA_2;
+   __IO uint32_t CEC_TX_DATA_3;
+   __IO uint32_t CEC_TX_DATA_4;
+   __IO uint32_t CEC_RX_DATA_1;
+   __IO uint32_t CEC_RX_DATA_2;
+   __IO uint32_t CEC_RX_DATA_3;
+   __IO uint32_t CEC_RX_DATA_4;
+   __IO uint32_t RESERVED5[105];
+   __IO uint32_t TX_PHY_RESET_CTL;
+   __IO uint32_t TX_PHY_CTL0;
+   __IO uint32_t RESERVED6[30];
+   __IO uint32_t CPU_STATUS;
+   __IO uint32_t CPU_SET;
+   __IO uint32_t CPU_CLEAR;
+   __IO uint32_t CPU_MASK_STATUS;
+   __IO uint32_t CPU_MASK_SET;
+   __IO uint32_t CPU_MASK_CLEAR;
+} HDMI_Type;
+
+
+typedef struct {
+   __IO uint32_t CONTROL;
+   __IO uint32_t V_CONTROL;
+   __IO uint32_t VSYNCD_EVEN;
+   __IO uint32_t HORZA;
+   __IO uint32_t HORZB;
+   __IO uint32_t VERTA;
+   __IO uint32_t VERTB;
+   __IO uint32_t VERTA_EVEN;
+   __IO uint32_t VERTB_EVEN;
+   __IO uint32_t INTEN;
+   __IO uint32_t INTSTAT;
+   __IO uint32_t STAT;
+   __IO uint32_t HACT_ACT;
+} PixelValve_type;
+
+typedef struct {
+   __IO uint32_t DISPCTRL;
+   __IO uint32_t DISPSTAT;
+   __IO uint32_t DISPID;
+   __IO uint32_t DISPECTRL;
+   __IO uint32_t DISPPROF;
+   __IO uint32_t DISPDITHER;
+   __IO uint32_t DISPEOLN;
+   __IO uint32_t DISPLIST0;
+   __IO uint32_t DISPLIST1;
+   __IO uint32_t DISPLIST2;
+   __IO uint32_t DISPLSTAT;
+   __IO uint32_t DISPLACT0;
+   __IO uint32_t DISPLACT1;
+   __IO uint32_t DISPLACT2;
+   __IO uint32_t DISPCTRL0;
+   __IO uint32_t DISPBKGND0;
+   __IO uint32_t DISPSTAT0;
+   __IO uint32_t DISPBASE0;
+   __IO uint32_t DISPCTRL1;
+   __IO uint32_t DISPBKGND1;
+   __IO uint32_t DISPSTAT1;
+   __IO uint32_t DISPBASE1;
+   __IO uint32_t DISPCTRL2;
+   __IO uint32_t DISPBKGND2;
+   __IO uint32_t DISPSTAT2;
+   __IO uint32_t DISPBASE2;
+   __IO uint32_t DISPALPHA2;
+   __IO uint32_t OLEDOFFS;
+   __IO uint32_t OLEDCOEF0;
+   __IO uint32_t OLEDCOEF1;
+   __IO uint32_t OLEDCOEF2;
+   __IO uint32_t RESERVED0[12];
+   __IO uint32_t DISPSLAVE0_1_2_STUFF[5];
+   __IO uint32_t RESERVED[3];
+   __IO uint32_t SCALER_GAMDATA;
+} HVS_Type;
+
+typedef struct {
+   __IO uint32_t IDENT0;
+   __IO uint32_t IDENT1;
+   __IO uint32_t IDENT2;
+   __IO uint32_t RESERVED0;
+   __IO uint32_t SCRATCH;
+   __IO uint32_t RESERVED1[3];
+   __IO uint32_t L2CACTL;
+   __IO uint32_t SLCACTL;
+   __IO uint32_t RESERVED2[2];
+   __IO uint32_t INTCTL;
+   __IO uint32_t INTENA;
+   __IO uint32_t INTDIS;
+   __IO uint32_t RESERVED3[49];
+   __IO uint32_t CT0CS;
+   __IO uint32_t CT1CS;
+   __IO uint32_t CT0EA;
+   __IO uint32_t CT1EA;
+   __IO uint32_t CT0CA;
+   __IO uint32_t CT1CA;
+   __IO uint32_t CT00RA0;
+   __IO uint32_t CT01RA0;
+   __IO uint32_t CT0LC;
+   __IO uint32_t CT1LC;
+   __IO uint32_t CT0PC;
+   __IO uint32_t CT1PC;
+   __IO uint32_t PCS;
+   __IO uint32_t BFC;
+   __IO uint32_t RFC;
+   __IO uint32_t RESERVED4[113];
+   __IO uint32_t BPCA;
+   __IO uint32_t BPCS;
+   __IO uint32_t BPOA;
+   __IO uint32_t BPOS;
+   __IO uint32_t BXCF;
+   __IO uint32_t RESERVED5[63];
+   __IO uint32_t SQRSV0;
+   __IO uint32_t SQRSV1;
+   __IO uint32_t SQCNTL;
+   __IO uint32_t RESERVED6[5];
+   __IO uint32_t SRQPC;
+   __IO uint32_t SRQUA;
+   __IO uint32_t SRQUL;
+   __IO uint32_t SRQCS;
+   __IO uint32_t RESERVED7[48];
+   __IO uint32_t VPACNTL;
+   __IO uint32_t VPMBASE;
+   __IO uint32_t RESERVED8[90];
+   __IO uint32_t PCTRC;
+   __IO uint32_t PCTRE;
+   __IO uint32_t PCTR0;
+   __IO uint32_t PCTRS0;
+   __IO uint32_t PCTR1;
+   __IO uint32_t PCTRS1;
+   __IO uint32_t PCTR2;
+   __IO uint32_t PCTRS2;
+   __IO uint32_t PCTR3;
+   __IO uint32_t PCTRS3;
+   __IO uint32_t PCTR4;
+   __IO uint32_t PCTRS4;
+   __IO uint32_t PCTR5;
+   __IO uint32_t PCTRS5;
+   __IO uint32_t PCTR6;
+   __IO uint32_t PCTRS6;
+   __IO uint32_t PCTR7;
+   __IO uint32_t PCTRS7;
+   __IO uint32_t PCTR8;
+   __IO uint32_t PCTRS8;
+   __IO uint32_t PCTR9;
+   __IO uint32_t PCTRS9;
+   __IO uint32_t PCTR10;
+   __IO uint32_t PCTRS10;
+   __IO uint32_t PCTR11;
+   __IO uint32_t PCTRS11;
+   __IO uint32_t PCTR12;
+   __IO uint32_t PCTRS12;
+   __IO uint32_t PCTR13;
+   __IO uint32_t PCTRS13;
+   __IO uint32_t PCTR14;
+   __IO uint32_t PCTRS14;
+   __IO uint32_t PCTR15;
+   __IO uint32_t PCTRS15;
+   __IO uint32_t RESERVED9[512];
+   __IO uint32_t DBGE;
+   __IO uint32_t FDBGO;
+   __IO uint32_t FDBGB;
+   __IO uint32_t FDBGR;
+   __IO uint32_t FDBGS;
+   __IO uint32_t RESERVED10[3];
+   __IO uint32_t ERRSTAT;
+} V3D_Type;
+
+typedef struct {
+   /* Control and Status register */
+   __IO uint32_t SMICS;
+   /* length/count (n external transfers) */
+   __IO uint32_t SMIL;
+   /* address register */
+   __IO uint32_t SMIA;
+   /* data register */
+   __IO uint32_t SMID;
+   /* device 0 read settings */
+   __IO uint32_t SMIDSR0;
+   /* device 0 write settings */
+   __IO uint32_t SMIDSW0;
+   /* device 1 read settings */
+   __IO uint32_t SMIDSR1;
+   /* device 1 write settings */
+   __IO uint32_t SMIDSW1;
+   /* device 2 read settings */
+   __IO uint32_t SMIDSR2;
+   /* device 2 write settings */
+   __IO uint32_t SMIDSW2;
+   /* device 3 read settings */
+   __IO uint32_t SMIDSR3;
+   /* device 3 write settings */
+   __IO uint32_t SMIDSW3;
+   /* DMA Control Registers */
+   __IO uint32_t SMIDC;
+   /* direct control/status register */
+   __IO uint32_t SMIDCS;
+   /* direct address register */
+   __IO uint32_t SMIDA;
+   /* direct data registers */
+   __IO uint32_t SMIDD;
+   /* FIFO debug register */
+   __IO uint32_t SMIFD;
+} SMI_Type;
 
 typedef struct {
    __IO uint32_t RESET;
@@ -125,7 +609,7 @@ typedef struct {
    __IO uint32_t DABT;
    __IO uint32_t RESERVED;
    __IO uint32_t IRQ;
-   __IO uint32_t FIQ;
+   __IO uint32_t FIQ[20];
 } Vector_Table_Type;
 
 typedef struct {
@@ -215,9 +699,62 @@ typedef struct {
 } GPIO_Pads_Control_Type;
 
 typedef struct {
-   /* 0x70 bytes for */
-   /* Page aligned boundary to start at PERIPH_BASE + 0x00101000) */
-   __IO uint32_t RESERVED[28];
+   /*Generic Clock Control */
+   __IO uint32_t GNRICCTL;
+   /*Generic Clock Divisor */
+   __IO uint32_t GNRICDIV;
+   /* VPU Clock Control */
+   __IO uint32_t VPUCTL;
+   /* VPU Clock Divisor */
+   __IO uint32_t VPUDIV;
+   /* System Clock Control */
+   __IO uint32_t SYSCTL;
+   /* System Clock Divisor */
+   __IO uint32_t SYSDIV;
+   /* PERIA Clock Control */
+   __IO uint32_t PERIACTL;
+   /* PERIA Clock Divisor */
+   __IO uint32_t PERIADIV;
+   /* PERII Clock Control */
+   __IO uint32_t PERIICTL;
+   /* PERII Clock Divisor */
+   __IO uint32_t PERIIDIV;
+   /* H264 Clock Control */
+   __IO uint32_t H264CTL;
+   /* H264 Clock Divisor */
+   __IO uint32_t H264DIV;
+   /* ISP Clock Control */
+   __IO uint32_t ISPCTL;
+   /* ISP Clock Divisor */
+   __IO uint32_t ISPDIV;
+   /* V3D Clock Control */
+   __IO uint32_t V3DCTL;
+   /* V3D Clock Divisor */
+   __IO uint32_t V3DDIV;
+   /* Camera 0 Clock Control */
+   __IO uint32_t CAM0CTL;
+   /* Camera 0 Clock Divisor */
+   __IO uint32_t CAM0DIV;
+   /* Camera 1 Clock Control */
+   __IO uint32_t CAM1CTL;
+   /* Camera 1 Clock Divisor */
+   __IO uint32_t CAM1DIV;
+   /* CCP2 Clock Control */
+   __IO uint32_t CCP2CTL;
+   /* CCP2 Clock Divisor */
+   __IO uint32_t CCP2DIV;
+   /* DSI0E Clock Control */
+   __IO uint32_t DSI0ECTL;
+   /* DSI0E Clock Divisor */
+   __IO uint32_t DSI0EDIV;
+   /* DSI0P Clock Control */
+   __IO uint32_t DSI0PCTL;
+   /* DSI0P Clock Divisor */
+   __IO uint32_t DSI0PDIV;
+   /* DPI Clock Control */
+   __IO uint32_t DPICTL;
+   /* DPI Clock Divisor */
+   __IO uint32_t DPIDIV;
    /* General Purpose Clock Control 0*/
    __IO uint32_t GPCTL0;
    /* General Purpose Clock Divisor 0*/
@@ -230,6 +767,137 @@ typedef struct {
    __IO uint32_t GPCTL2;
    /* General Purpose Clock Divisor 2*/
    __IO uint32_t GPDIV2;
+   /* HSM Clock Control */
+   __IO uint32_t HSMCTL;
+   /* HSM Clock Divisor */
+   __IO uint32_t HSMDIV;
+   /* OTP Clock Control */
+   __IO uint32_t OTPCTL;
+   /* OTP Clock Divisor */
+   __IO uint32_t OTPDIV;
+   /* PCM/I2S Clock Control */
+   __IO uint32_t PCMCTL;
+   /* PCM/I2S Clock Divisor */
+   __IO uint32_t PCMDIV;
+   /* PWM Clock Control */
+   __IO uint32_t PWMCTL;
+   /* PWM Clock Divisor */
+   __IO uint32_t PWMDIV;
+   /* SLIM Clock Control */
+   __IO uint32_t SLIMCTL;
+   /* SLIM Clock Divisor */
+   __IO uint32_t SLIMDIV;
+   /* SMI Clock Control */
+   __IO uint32_t SMICTL;
+   /* SMI Clock Divisor */
+   __IO uint32_t SMIDIV;
+   /* TCNT Clock Control */
+   __IO uint32_t TCNTCTL;
+   /* TCNT Clock Divisor */
+   __IO uint32_t TCNTDIV;
+   /* TEC Clock Control */
+   __IO uint32_t TECCTL;
+   /* TEC Clock Divisor */
+   __IO uint32_t TECDIV;
+   /* TD0 Clock Control */
+   __IO uint32_t TD0CTL;
+   /* TD0 Clock Divisor */
+   __IO uint32_t TD0DIV;
+   /* TD1 Clock Control */
+   __IO uint32_t TD1CTL;
+   /* TD1 Clock Divisor */
+   __IO uint32_t TD1DIV;
+   /* TSENS Clock Control */
+   __IO uint32_t TSENSCTL;
+   /* TSENS Clock Divisor */
+   __IO uint32_t TSENSDIV;
+   /* Timer Clock Control */
+   __IO uint32_t TIMERCTL;
+   /* Timer Clock Divisor */
+   __IO uint32_t TIMERDIV;
+   /* UART Clock Control */
+   __IO uint32_t UARTCTL;
+   /* UART Clock Divisor */
+   __IO uint32_t UARTDIV;
+   /* VEC Clock Control */
+   __IO uint32_t VECCTL;
+   /* VEC Clock Divisor */
+   __IO uint32_t VECDIV;
+   /* Oscillator Count */
+   __IO uint32_t OSCCOUNT;
+   /* PLLA */
+   __IO uint32_t PLLA;
+   /* PLLC */
+   __IO uint32_t PLLC;
+   /* PLLD */
+   __IO uint32_t PLLD;
+   /* PLLH */
+   __IO uint32_t PLLH;
+   /* Lock */
+   __IO uint32_t LOCK;
+   /* Event */
+   __IO uint32_t EVENT;
+   /* INTEN */
+   __IO uint32_t INTEN;
+   /* DSI0HSCK */
+   __IO uint32_t DSI0HSCK;
+   /* CKSM */
+   __IO uint32_t CKSM;
+   /* Oscillator Frequency Integer */
+   __IO uint32_t OSCFREQI;
+   /* Oscillator Frequency Fraction */
+   __IO uint32_t OSCFREQF;
+   /* PLLT Control */
+   __IO uint32_t PLLTCTL;
+   /* PLLT0 Count */
+   __IO uint32_t PLLTCNT0;
+   /* PLLT1 Count */
+   __IO uint32_t PLLTCNT1;
+   /* PLLT2 Count */
+   __IO uint32_t PLLTCNT2;
+   /* PLLT3 Count */
+   __IO uint32_t PLLTCNT3;
+   /* TD Clock Enable */
+   __IO uint32_t TDCLKEN;
+   /* Burst Control */
+   __IO uint32_t BURSTCTL;
+   /* Burst Count */
+   __IO uint32_t BURSTCNT;
+   /* DSI1E Clock Control*/
+   __IO uint32_t DSI1ECTL;
+   /* DSI1E Clock Divisor*/
+   __IO uint32_t DSI1EDIV;
+   /* DSI1P Clock Control*/
+   __IO uint32_t DSI1PCTL;
+   /* DSI1P Clock Divisor*/
+   __IO uint32_t DSI1PDIV;
+   /* DFT Clock Control*/
+   __IO uint32_t DFTCTL;
+   /* DFT Clock Divisor*/
+   __IO uint32_t DFTDIV;
+   /* PLLB */
+   __IO uint32_t PLLB;
+   __IO uint32_t RESERVED0[7];
+   /* Pulse Clock Control */
+   __IO uint32_t PULSECTL;
+   /* Pulse Clock Divisor */
+   __IO uint32_t PULSEDIV;
+   /* SDC Clock Control */
+   __IO uint32_t SDCCTL;
+   /* SDC Clock Divisor */
+   __IO uint32_t SDCDIV;
+   /* ARM Clock Control */
+   __IO uint32_t ARMCTL;
+   /* ARM Clock Divisor */
+   __IO uint32_t ARMDIV;
+   /* AVEO Clock Control */
+   __IO uint32_t AVEOCTL;
+   /* AVEO Clock Divisor */
+   __IO uint32_t AVEODIV;
+   /* EMMC Clock Control */
+   __IO uint32_t EMMCCTL;
+   /* EMMC Clock Divisor */
+   __IO uint32_t EMMCDIV;
 } CM_Type; 
 
 typedef struct {
@@ -350,6 +1018,7 @@ typedef struct {
    __I uint32_t AUX_IRQ;
    /* Auxiliary enables */
    __IO uint32_t AUX_ENABLES;
+   __IO uint32_t RESERVED0[14];
    /* Mini UART I/O Data */
    __IO uint32_t AUX_MU_IO_REG;
    /* Mini UART Interrupt Enable */
@@ -372,54 +1041,30 @@ typedef struct {
    __I uint32_t AUX_MU_STAT_REG;
    /* Mini UART Baudrate */
    __IO uint32_t AUX_MU_BAUD_REG;
+   __IO uint32_t RESERVED1[5];
    /* SPI 1 Control Register 0 */
    __IO uint32_t AUX_SPI0_CNTL0_REG;
    /* SPI 1 Control Register 1 */
    __IO uint32_t AUX_SPI0_CNTL1_REG;
    /* SPI 1 Status */
    __I uint32_t AUX_SPI0_STAT_REG;
+   __IO uint32_t RESERVED2;
+   /* SPI 1 Data */
+   __IO uint32_t AUX_SPI0_IO_REG;
    /* SPI 1 Peek */
    __I uint32_t AUX_SPI0_PEEK_REG;
-   /* SPI 1 Data */
-   /* These four addresses all write to the same FIFO */
-   /* Writing to any of these registers causes the SPI CS_n pins */
-   /* To be de-asserted at the end of the access */
-   __IO uint32_t AUX_SPI0_IO_REG;
-   uint32_t RESERVED0;
-   uint32_t RESERVED1;
-   uint32_t RESERVED2;
-   /* Extended CS port of the SPI interfaces */
-   /* These four addresses all write to the same FIFO */
-   /* Writing to these addresses causes the SPI CS_n pins to */
-   /* remain asserted at the end of the access */
-   __IO uint32_t AUX_SPI0_TXHOLD_REG;
-   uint32_t RESERVED3;
-   uint32_t RESERVED4;
-   uint32_t RESERVED5;
+   __IO uint32_t RESERVED3[2];
    /* SPI 2 Control register 0 */
    __IO uint32_t AUX_SPI1_CNTL0_REG;
    /* SPI 2 Control register 1 */
    __IO uint32_t AUX_SPI1_CNTL1_REG;
    /* SPI 2 Status */
    __I uint32_t AUX_SPI1_STAT_REG;
+   __IO uint32_t RESERVED4;
+   /* SPI 2 Data */
+   __IO uint32_t AUX_SPI1_IO_REG;
    /* SPI 2 Peek */
    __I uint32_t AUX_SPI1_PEEK_REG;
-   /* SPI 2 Data */
-   /* These four addresses all write to the same FIFO */
-   /* Writing to any of these registers causes the SPI CS_n pins */
-   /* To be de-asserted at the end of the access */
-   __IO uint32_t AUX_SPI1_IO_REG;
-   uint32_t RESERVED6;
-   uint32_t RESERVED7;
-   uint32_t RESERVED8;
-   /* Extended CS port of the SPI interfaces */
-   /* These four addresses all write to the same FIFO */
-   /* Writing to these addresses causes the SPI CS_n pins to */
-   /* remain asserted at the end of the access */
-   __IO uint32_t AUX_SPI1_TXHOLD_REG;
-   uint32_t RESERVED9;
-   uint32_t RESERVED10;
-   uint32_t RESERVED11;
 } AUX_Type;
 
 typedef struct {
@@ -619,7 +1264,7 @@ typedef struct {
 /*#define P1 ((GPIO_Type *) GPIO_BASE)*/
 #define SYS_TMR ((SysTimer_Type *) SYS_TMR_BASE)
 /*#define ARM_TMR ((ARMTimer_Type *) ARM_TMR_BASE) */
-#define AUX ((AUX_Type *) AUX_BASE)
+/*#define AUX ((AUX_Type *) AUX_BASE)*/
 #define SPI ((SPI_Type *) SPI_BASE)
 #define PWM ((PWM_Type* ) PWM_BASE)
 #define IRQ_CTLS ((Interrupt_Controller_Type *) IRQ_BASE)
@@ -2256,26 +2901,25 @@ typedef struct {
 #define GPIO_GPSET132 ((uint32_t) 0x00000001)
 #define GPIO_GPSET133 ((uint32_t) 0x00000002)
 #define GPIO_GPSET134 ((uint32_t) 0x00000004)
-#define GPIO_GPSET134 ((uint32_t) 0x00000008)
-#define GPIO_GPSET135 ((uint32_t) 0x00000010)
-#define GPIO_GPSET136 ((uint32_t) 0x00000020)
-#define GPIO_GPSET137 ((uint32_t) 0x00000040)
-#define GPIO_GPSET138 ((uint32_t) 0x00000080)
-#define GPIO_GPSET139 ((uint32_t) 0x00000100)
-#define GPIO_GPSET140 ((uint32_t) 0x00000200)
-#define GPIO_GPSET141 ((uint32_t) 0x00000400)
-#define GPIO_GPSET142 ((uint32_t) 0x00000800)
-#define GPIO_GPSET143 ((uint32_t) 0x00001000)
-#define GPIO_GPSET144 ((uint32_t) 0x00002000)
-#define GPIO_GPSET145 ((uint32_t) 0x00004000)
-#define GPIO_GPSET146 ((uint32_t) 0x00008000)
-#define GPIO_GPSET147 ((uint32_t) 0x00010000)
-#define GPIO_GPSET148 ((uint32_t) 0x00020000)
-#define GPIO_GPSET149 ((uint32_t) 0x00040000)
-#define GPIO_GPSET150 ((uint32_t) 0x00080000)
-#define GPIO_GPSET151 ((uint32_t) 0x00100000)
-#define GPIO_GPSET152 ((uint32_t) 0x00200000)
-#define GPIO_GPSET153 ((uint32_t) 0x00400000)
+#define GPIO_GPSET135 ((uint32_t) 0x00000008)
+#define GPIO_GPSET136 ((uint32_t) 0x00000010)
+#define GPIO_GPSET137 ((uint32_t) 0x00000020)
+#define GPIO_GPSET138 ((uint32_t) 0x00000040)
+#define GPIO_GPSET139 ((uint32_t) 0x00000080)
+#define GPIO_GPSET140 ((uint32_t) 0x00000100)
+#define GPIO_GPSET141 ((uint32_t) 0x00000200)
+#define GPIO_GPSET142 ((uint32_t) 0x00000400)
+#define GPIO_GPSET143 ((uint32_t) 0x00000800)
+#define GPIO_GPSET144 ((uint32_t) 0x00001000)
+#define GPIO_GPSET145 ((uint32_t) 0x00002000)
+#define GPIO_GPSET146 ((uint32_t) 0x00004000)
+#define GPIO_GPSET147 ((uint32_t) 0x00008000)
+#define GPIO_GPSET148 ((uint32_t) 0x00010000)
+#define GPIO_GPSET149 ((uint32_t) 0x00020000)
+#define GPIO_GPSET150 ((uint32_t) 0x00040000)
+#define GPIO_GPSET151 ((uint32_t) 0x00080000)
+#define GPIO_GPSET152 ((uint32_t) 0x00100000)
+#define GPIO_GPSET153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Output Clear 0 Register (W) */
 /* CLRn (n=0..31) bits (W) */
@@ -2323,26 +2967,25 @@ typedef struct {
 #define GPIO_GPCLR132 ((uint32_t) 0x00000001)
 #define GPIO_GPCLR133 ((uint32_t) 0x00000002)
 #define GPIO_GPCLR134 ((uint32_t) 0x00000004)
-#define GPIO_GPCLR134 ((uint32_t) 0x00000008)
-#define GPIO_GPCLR135 ((uint32_t) 0x00000010)
-#define GPIO_GPCLR136 ((uint32_t) 0x00000020)
-#define GPIO_GPCLR137 ((uint32_t) 0x00000040)
-#define GPIO_GPCLR138 ((uint32_t) 0x00000080)
-#define GPIO_GPCLR139 ((uint32_t) 0x00000100)
-#define GPIO_GPCLR140 ((uint32_t) 0x00000200)
-#define GPIO_GPCLR141 ((uint32_t) 0x00000400)
-#define GPIO_GPCLR142 ((uint32_t) 0x00000800)
-#define GPIO_GPCLR143 ((uint32_t) 0x00001000)
-#define GPIO_GPCLR144 ((uint32_t) 0x00002000)
-#define GPIO_GPCLR145 ((uint32_t) 0x00004000)
-#define GPIO_GPCLR146 ((uint32_t) 0x00008000)
-#define GPIO_GPCLR147 ((uint32_t) 0x00010000)
-#define GPIO_GPCLR148 ((uint32_t) 0x00020000)
-#define GPIO_GPCLR149 ((uint32_t) 0x00040000)
-#define GPIO_GPCLR150 ((uint32_t) 0x00080000)
-#define GPIO_GPCLR151 ((uint32_t) 0x00100000)
-#define GPIO_GPCLR152 ((uint32_t) 0x00200000)
-#define GPIO_GPCLR153 ((uint32_t) 0x00400000)
+#define GPIO_GPCLR135 ((uint32_t) 0x00000008)
+#define GPIO_GPCLR136 ((uint32_t) 0x00000010)
+#define GPIO_GPCLR137 ((uint32_t) 0x00000020)
+#define GPIO_GPCLR138 ((uint32_t) 0x00000040)
+#define GPIO_GPCLR139 ((uint32_t) 0x00000080)
+#define GPIO_GPCLR140 ((uint32_t) 0x00000100)
+#define GPIO_GPCLR141 ((uint32_t) 0x00000200)
+#define GPIO_GPCLR142 ((uint32_t) 0x00000400)
+#define GPIO_GPCLR143 ((uint32_t) 0x00000800)
+#define GPIO_GPCLR144 ((uint32_t) 0x00001000)
+#define GPIO_GPCLR145 ((uint32_t) 0x00002000)
+#define GPIO_GPCLR146 ((uint32_t) 0x00004000)
+#define GPIO_GPCLR147 ((uint32_t) 0x00008000)
+#define GPIO_GPCLR148 ((uint32_t) 0x00010000)
+#define GPIO_GPCLR149 ((uint32_t) 0x00020000)
+#define GPIO_GPCLR150 ((uint32_t) 0x00040000)
+#define GPIO_GPCLR151 ((uint32_t) 0x00080000)
+#define GPIO_GPCLR152 ((uint32_t) 0x00100000)
+#define GPIO_GPCLR153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Level 0 Register (R) */
 /* Read value of the GPIO pin 0..31 */
@@ -2390,26 +3033,25 @@ typedef struct {
 #define GPIO_GPLEV132 ((uint32_t) 0x00000001)
 #define GPIO_GPLEV133 ((uint32_t) 0x00000002)
 #define GPIO_GPLEV134 ((uint32_t) 0x00000004)
-#define GPIO_GPLEV134 ((uint32_t) 0x00000008)
-#define GPIO_GPLEV135 ((uint32_t) 0x00000010)
-#define GPIO_GPLEV136 ((uint32_t) 0x00000020)
-#define GPIO_GPLEV137 ((uint32_t) 0x00000040)
-#define GPIO_GPLEV138 ((uint32_t) 0x00000080)
-#define GPIO_GPLEV139 ((uint32_t) 0x00000100)
-#define GPIO_GPLEV140 ((uint32_t) 0x00000200)
-#define GPIO_GPLEV141 ((uint32_t) 0x00000400)
-#define GPIO_GPLEV142 ((uint32_t) 0x00000800)
-#define GPIO_GPLEV143 ((uint32_t) 0x00001000)
-#define GPIO_GPLEV144 ((uint32_t) 0x00002000)
-#define GPIO_GPLEV145 ((uint32_t) 0x00004000)
-#define GPIO_GPLEV146 ((uint32_t) 0x00008000)
-#define GPIO_GPLEV147 ((uint32_t) 0x00010000)
-#define GPIO_GPLEV148 ((uint32_t) 0x00020000)
-#define GPIO_GPLEV149 ((uint32_t) 0x00040000)
-#define GPIO_GPLEV150 ((uint32_t) 0x00080000)
-#define GPIO_GPLEV151 ((uint32_t) 0x00100000)
-#define GPIO_GPLEV152 ((uint32_t) 0x00200000)
-#define GPIO_GPLEV153 ((uint32_t) 0x00400000)
+#define GPIO_GPLEV135 ((uint32_t) 0x00000008)
+#define GPIO_GPLEV136 ((uint32_t) 0x00000010)
+#define GPIO_GPLEV137 ((uint32_t) 0x00000020)
+#define GPIO_GPLEV138 ((uint32_t) 0x00000040)
+#define GPIO_GPLEV139 ((uint32_t) 0x00000080)
+#define GPIO_GPLEV140 ((uint32_t) 0x00000100)
+#define GPIO_GPLEV141 ((uint32_t) 0x00000200)
+#define GPIO_GPLEV142 ((uint32_t) 0x00000400)
+#define GPIO_GPLEV143 ((uint32_t) 0x00000800)
+#define GPIO_GPLEV144 ((uint32_t) 0x00001000)
+#define GPIO_GPLEV145 ((uint32_t) 0x00002000)
+#define GPIO_GPLEV146 ((uint32_t) 0x00004000)
+#define GPIO_GPLEV147 ((uint32_t) 0x00008000)
+#define GPIO_GPLEV148 ((uint32_t) 0x00010000)
+#define GPIO_GPLEV149 ((uint32_t) 0x00020000)
+#define GPIO_GPLEV150 ((uint32_t) 0x00040000)
+#define GPIO_GPLEV151 ((uint32_t) 0x00080000)
+#define GPIO_GPLEV152 ((uint32_t) 0x00100000)
+#define GPIO_GPLEV153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Event Detect Status 0 Register (RW) */
 #define GPIO_GPLEV0_OFS (0)
@@ -2456,26 +3098,25 @@ typedef struct {
 #define GPIO_GPLEV132 ((uint32_t) 0x00000001)
 #define GPIO_GPLEV133 ((uint32_t) 0x00000002)
 #define GPIO_GPLEV134 ((uint32_t) 0x00000004)
-#define GPIO_GPLEV134 ((uint32_t) 0x00000008)
-#define GPIO_GPLEV135 ((uint32_t) 0x00000010)
-#define GPIO_GPLEV136 ((uint32_t) 0x00000020)
-#define GPIO_GPLEV137 ((uint32_t) 0x00000040)
-#define GPIO_GPLEV138 ((uint32_t) 0x00000080)
-#define GPIO_GPLEV139 ((uint32_t) 0x00000100)
-#define GPIO_GPLEV140 ((uint32_t) 0x00000200)
-#define GPIO_GPLEV141 ((uint32_t) 0x00000400)
-#define GPIO_GPLEV142 ((uint32_t) 0x00000800)
-#define GPIO_GPLEV143 ((uint32_t) 0x00001000)
-#define GPIO_GPLEV144 ((uint32_t) 0x00002000)
-#define GPIO_GPLEV145 ((uint32_t) 0x00004000)
-#define GPIO_GPLEV146 ((uint32_t) 0x00008000)
-#define GPIO_GPLEV147 ((uint32_t) 0x00010000)
-#define GPIO_GPLEV148 ((uint32_t) 0x00020000)
-#define GPIO_GPLEV149 ((uint32_t) 0x00040000)
-#define GPIO_GPLEV150 ((uint32_t) 0x00080000)
-#define GPIO_GPLEV151 ((uint32_t) 0x00100000)
-#define GPIO_GPLEV152 ((uint32_t) 0x00200000)
-#define GPIO_GPLEV153 ((uint32_t) 0x00400000)
+#define GPIO_GPLEV135 ((uint32_t) 0x00000008)
+#define GPIO_GPLEV136 ((uint32_t) 0x00000010)
+#define GPIO_GPLEV137 ((uint32_t) 0x00000020)
+#define GPIO_GPLEV138 ((uint32_t) 0x00000040)
+#define GPIO_GPLEV139 ((uint32_t) 0x00000080)
+#define GPIO_GPLEV140 ((uint32_t) 0x00000100)
+#define GPIO_GPLEV141 ((uint32_t) 0x00000200)
+#define GPIO_GPLEV142 ((uint32_t) 0x00000400)
+#define GPIO_GPLEV143 ((uint32_t) 0x00000800)
+#define GPIO_GPLEV144 ((uint32_t) 0x00001000)
+#define GPIO_GPLEV145 ((uint32_t) 0x00002000)
+#define GPIO_GPLEV146 ((uint32_t) 0x00004000)
+#define GPIO_GPLEV147 ((uint32_t) 0x00008000)
+#define GPIO_GPLEV148 ((uint32_t) 0x00010000)
+#define GPIO_GPLEV149 ((uint32_t) 0x00020000)
+#define GPIO_GPLEV150 ((uint32_t) 0x00040000)
+#define GPIO_GPLEV151 ((uint32_t) 0x00080000)
+#define GPIO_GPLEV152 ((uint32_t) 0x00100000)
+#define GPIO_GPLEV153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Rising Edge Detect Enable 0 Register (RW) */
 #define GPIO_GPREN0_OFS (0)
@@ -2522,26 +3163,25 @@ typedef struct {
 #define GPIO_GPREN132 ((uint32_t) 0x00000001)
 #define GPIO_GPREN133 ((uint32_t) 0x00000002)
 #define GPIO_GPREN134 ((uint32_t) 0x00000004)
-#define GPIO_GPREN134 ((uint32_t) 0x00000008)
-#define GPIO_GPREN135 ((uint32_t) 0x00000010)
-#define GPIO_GPREN136 ((uint32_t) 0x00000020)
-#define GPIO_GPREN137 ((uint32_t) 0x00000040)
-#define GPIO_GPREN138 ((uint32_t) 0x00000080)
-#define GPIO_GPREN139 ((uint32_t) 0x00000100)
-#define GPIO_GPREN140 ((uint32_t) 0x00000200)
-#define GPIO_GPREN141 ((uint32_t) 0x00000400)
-#define GPIO_GPREN142 ((uint32_t) 0x00000800)
-#define GPIO_GPREN143 ((uint32_t) 0x00001000)
-#define GPIO_GPREN144 ((uint32_t) 0x00002000)
-#define GPIO_GPREN145 ((uint32_t) 0x00004000)
-#define GPIO_GPREN146 ((uint32_t) 0x00008000)
-#define GPIO_GPREN147 ((uint32_t) 0x00010000)
-#define GPIO_GPREN148 ((uint32_t) 0x00020000)
-#define GPIO_GPREN149 ((uint32_t) 0x00040000)
-#define GPIO_GPREN150 ((uint32_t) 0x00080000)
-#define GPIO_GPREN151 ((uint32_t) 0x00100000)
-#define GPIO_GPREN152 ((uint32_t) 0x00200000)
-#define GPIO_GPREN153 ((uint32_t) 0x00400000)
+#define GPIO_GPREN135 ((uint32_t) 0x00000008)
+#define GPIO_GPREN136 ((uint32_t) 0x00000010)
+#define GPIO_GPREN137 ((uint32_t) 0x00000020)
+#define GPIO_GPREN138 ((uint32_t) 0x00000040)
+#define GPIO_GPREN139 ((uint32_t) 0x00000080)
+#define GPIO_GPREN140 ((uint32_t) 0x00000100)
+#define GPIO_GPREN141 ((uint32_t) 0x00000200)
+#define GPIO_GPREN142 ((uint32_t) 0x00000400)
+#define GPIO_GPREN143 ((uint32_t) 0x00000800)
+#define GPIO_GPREN144 ((uint32_t) 0x00001000)
+#define GPIO_GPREN145 ((uint32_t) 0x00002000)
+#define GPIO_GPREN146 ((uint32_t) 0x00004000)
+#define GPIO_GPREN147 ((uint32_t) 0x00008000)
+#define GPIO_GPREN148 ((uint32_t) 0x00010000)
+#define GPIO_GPREN149 ((uint32_t) 0x00020000)
+#define GPIO_GPREN150 ((uint32_t) 0x00040000)
+#define GPIO_GPREN151 ((uint32_t) 0x00080000)
+#define GPIO_GPREN152 ((uint32_t) 0x00100000)
+#define GPIO_GPREN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Falling Edge Detect Enable 0 Register (RW) */
 #define GPIO_GPFEN0_OFS (0)
@@ -2588,26 +3228,25 @@ typedef struct {
 #define GPIO_GPFEN132 ((uint32_t) 0x00000001)
 #define GPIO_GPFEN133 ((uint32_t) 0x00000002)
 #define GPIO_GPFEN134 ((uint32_t) 0x00000004)
-#define GPIO_GPFEN134 ((uint32_t) 0x00000008)
-#define GPIO_GPFEN135 ((uint32_t) 0x00000010)
-#define GPIO_GPFEN136 ((uint32_t) 0x00000020)
-#define GPIO_GPFEN137 ((uint32_t) 0x00000040)
-#define GPIO_GPFEN138 ((uint32_t) 0x00000080)
-#define GPIO_GPFEN139 ((uint32_t) 0x00000100)
-#define GPIO_GPFEN140 ((uint32_t) 0x00000200)
-#define GPIO_GPFEN141 ((uint32_t) 0x00000400)
-#define GPIO_GPFEN142 ((uint32_t) 0x00000800)
-#define GPIO_GPFEN143 ((uint32_t) 0x00001000)
-#define GPIO_GPFEN144 ((uint32_t) 0x00002000)
-#define GPIO_GPFEN145 ((uint32_t) 0x00004000)
-#define GPIO_GPFEN146 ((uint32_t) 0x00008000)
-#define GPIO_GPFEN147 ((uint32_t) 0x00010000)
-#define GPIO_GPFEN148 ((uint32_t) 0x00020000)
-#define GPIO_GPFEN149 ((uint32_t) 0x00040000)
-#define GPIO_GPFEN150 ((uint32_t) 0x00080000)
-#define GPIO_GPFEN151 ((uint32_t) 0x00100000)
-#define GPIO_GPFEN152 ((uint32_t) 0x00200000)
-#define GPIO_GPFEN153 ((uint32_t) 0x00400000)
+#define GPIO_GPFEN135 ((uint32_t) 0x00000008)
+#define GPIO_GPFEN136 ((uint32_t) 0x00000010)
+#define GPIO_GPFEN137 ((uint32_t) 0x00000020)
+#define GPIO_GPFEN138 ((uint32_t) 0x00000040)
+#define GPIO_GPFEN139 ((uint32_t) 0x00000080)
+#define GPIO_GPFEN140 ((uint32_t) 0x00000100)
+#define GPIO_GPFEN141 ((uint32_t) 0x00000200)
+#define GPIO_GPFEN142 ((uint32_t) 0x00000400)
+#define GPIO_GPFEN143 ((uint32_t) 0x00000800)
+#define GPIO_GPFEN144 ((uint32_t) 0x00001000)
+#define GPIO_GPFEN145 ((uint32_t) 0x00002000)
+#define GPIO_GPFEN146 ((uint32_t) 0x00004000)
+#define GPIO_GPFEN147 ((uint32_t) 0x00008000)
+#define GPIO_GPFEN148 ((uint32_t) 0x00010000)
+#define GPIO_GPFEN149 ((uint32_t) 0x00020000)
+#define GPIO_GPFEN150 ((uint32_t) 0x00040000)
+#define GPIO_GPFEN151 ((uint32_t) 0x00080000)
+#define GPIO_GPFEN152 ((uint32_t) 0x00100000)
+#define GPIO_GPFEN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin High Detect Enable 0 Register (RW) */
 #define GPIO_GPHEN0_OFS (0)
@@ -2654,26 +3293,25 @@ typedef struct {
 #define GPIO_GPHEN132 ((uint32_t) 0x00000001)
 #define GPIO_GPHEN133 ((uint32_t) 0x00000002)
 #define GPIO_GPHEN134 ((uint32_t) 0x00000004)
-#define GPIO_GPHEN134 ((uint32_t) 0x00000008)
-#define GPIO_GPHEN135 ((uint32_t) 0x00000010)
-#define GPIO_GPHEN136 ((uint32_t) 0x00000020)
-#define GPIO_GPHEN137 ((uint32_t) 0x00000040)
-#define GPIO_GPHEN138 ((uint32_t) 0x00000080)
-#define GPIO_GPHEN139 ((uint32_t) 0x00000100)
-#define GPIO_GPHEN140 ((uint32_t) 0x00000200)
-#define GPIO_GPHEN141 ((uint32_t) 0x00000400)
-#define GPIO_GPHEN142 ((uint32_t) 0x00000800)
-#define GPIO_GPHEN143 ((uint32_t) 0x00001000)
-#define GPIO_GPHEN144 ((uint32_t) 0x00002000)
-#define GPIO_GPHEN145 ((uint32_t) 0x00004000)
-#define GPIO_GPHEN146 ((uint32_t) 0x00008000)
-#define GPIO_GPHEN147 ((uint32_t) 0x00010000)
-#define GPIO_GPHEN148 ((uint32_t) 0x00020000)
-#define GPIO_GPHEN149 ((uint32_t) 0x00040000)
-#define GPIO_GPHEN150 ((uint32_t) 0x00080000)
-#define GPIO_GPHEN151 ((uint32_t) 0x00100000)
-#define GPIO_GPHEN152 ((uint32_t) 0x00200000)
-#define GPIO_GPHEN153 ((uint32_t) 0x00400000)
+#define GPIO_GPHEN135 ((uint32_t) 0x00000008)
+#define GPIO_GPHEN136 ((uint32_t) 0x00000010)
+#define GPIO_GPHEN137 ((uint32_t) 0x00000020)
+#define GPIO_GPHEN138 ((uint32_t) 0x00000040)
+#define GPIO_GPHEN139 ((uint32_t) 0x00000080)
+#define GPIO_GPHEN140 ((uint32_t) 0x00000100)
+#define GPIO_GPHEN141 ((uint32_t) 0x00000200)
+#define GPIO_GPHEN142 ((uint32_t) 0x00000400)
+#define GPIO_GPHEN143 ((uint32_t) 0x00000800)
+#define GPIO_GPHEN144 ((uint32_t) 0x00001000)
+#define GPIO_GPHEN145 ((uint32_t) 0x00002000)
+#define GPIO_GPHEN146 ((uint32_t) 0x00004000)
+#define GPIO_GPHEN147 ((uint32_t) 0x00008000)
+#define GPIO_GPHEN148 ((uint32_t) 0x00010000)
+#define GPIO_GPHEN149 ((uint32_t) 0x00020000)
+#define GPIO_GPHEN150 ((uint32_t) 0x00040000)
+#define GPIO_GPHEN151 ((uint32_t) 0x00080000)
+#define GPIO_GPHEN152 ((uint32_t) 0x00100000)
+#define GPIO_GPHEN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Low Detect Enable 0 Register (RW) */
 #define GPIO_GPLEN0_OFS (0)
@@ -2720,26 +3358,25 @@ typedef struct {
 #define GPIO_GPLEN132 ((uint32_t) 0x00000001)
 #define GPIO_GPLEN133 ((uint32_t) 0x00000002)
 #define GPIO_GPLEN134 ((uint32_t) 0x00000004)
-#define GPIO_GPLEN134 ((uint32_t) 0x00000008)
-#define GPIO_GPLEN135 ((uint32_t) 0x00000010)
-#define GPIO_GPLEN136 ((uint32_t) 0x00000020)
-#define GPIO_GPLEN137 ((uint32_t) 0x00000040)
-#define GPIO_GPLEN138 ((uint32_t) 0x00000080)
-#define GPIO_GPLEN139 ((uint32_t) 0x00000100)
-#define GPIO_GPLEN140 ((uint32_t) 0x00000200)
-#define GPIO_GPLEN141 ((uint32_t) 0x00000400)
-#define GPIO_GPLEN142 ((uint32_t) 0x00000800)
-#define GPIO_GPLEN143 ((uint32_t) 0x00001000)
-#define GPIO_GPLEN144 ((uint32_t) 0x00002000)
-#define GPIO_GPLEN145 ((uint32_t) 0x00004000)
-#define GPIO_GPLEN146 ((uint32_t) 0x00008000)
-#define GPIO_GPLEN147 ((uint32_t) 0x00010000)
-#define GPIO_GPLEN148 ((uint32_t) 0x00020000)
-#define GPIO_GPLEN149 ((uint32_t) 0x00040000)
-#define GPIO_GPLEN150 ((uint32_t) 0x00080000)
-#define GPIO_GPLEN151 ((uint32_t) 0x00100000)
-#define GPIO_GPLEN152 ((uint32_t) 0x00200000)
-#define GPIO_GPLEN153 ((uint32_t) 0x00400000)
+#define GPIO_GPLEN135 ((uint32_t) 0x00000008)
+#define GPIO_GPLEN136 ((uint32_t) 0x00000010)
+#define GPIO_GPLEN137 ((uint32_t) 0x00000020)
+#define GPIO_GPLEN138 ((uint32_t) 0x00000040)
+#define GPIO_GPLEN139 ((uint32_t) 0x00000080)
+#define GPIO_GPLEN140 ((uint32_t) 0x00000100)
+#define GPIO_GPLEN141 ((uint32_t) 0x00000200)
+#define GPIO_GPLEN142 ((uint32_t) 0x00000400)
+#define GPIO_GPLEN143 ((uint32_t) 0x00000800)
+#define GPIO_GPLEN144 ((uint32_t) 0x00001000)
+#define GPIO_GPLEN145 ((uint32_t) 0x00002000)
+#define GPIO_GPLEN146 ((uint32_t) 0x00004000)
+#define GPIO_GPLEN147 ((uint32_t) 0x00008000)
+#define GPIO_GPLEN148 ((uint32_t) 0x00010000)
+#define GPIO_GPLEN149 ((uint32_t) 0x00020000)
+#define GPIO_GPLEN150 ((uint32_t) 0x00040000)
+#define GPIO_GPLEN151 ((uint32_t) 0x00080000)
+#define GPIO_GPLEN152 ((uint32_t) 0x00100000)
+#define GPIO_GPLEN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Async. Rising Edge Detect 0 Register (RW) */
 #define GPIO_GPAREN0_OFS (0)
@@ -2786,26 +3423,25 @@ typedef struct {
 #define GPIO_GPAREN132 ((uint32_t) 0x00000001)
 #define GPIO_GPAREN133 ((uint32_t) 0x00000002)
 #define GPIO_GPAREN134 ((uint32_t) 0x00000004)
-#define GPIO_GPAREN134 ((uint32_t) 0x00000008)
-#define GPIO_GPAREN135 ((uint32_t) 0x00000010)
-#define GPIO_GPAREN136 ((uint32_t) 0x00000020)
-#define GPIO_GPAREN137 ((uint32_t) 0x00000040)
-#define GPIO_GPAREN138 ((uint32_t) 0x00000080)
-#define GPIO_GPAREN139 ((uint32_t) 0x00000100)
-#define GPIO_GPAREN140 ((uint32_t) 0x00000200)
-#define GPIO_GPAREN141 ((uint32_t) 0x00000400)
-#define GPIO_GPAREN142 ((uint32_t) 0x00000800)
-#define GPIO_GPAREN143 ((uint32_t) 0x00001000)
-#define GPIO_GPAREN144 ((uint32_t) 0x00002000)
-#define GPIO_GPAREN145 ((uint32_t) 0x00004000)
-#define GPIO_GPAREN146 ((uint32_t) 0x00008000)
-#define GPIO_GPAREN147 ((uint32_t) 0x00010000)
-#define GPIO_GPAREN148 ((uint32_t) 0x00020000)
-#define GPIO_GPAREN149 ((uint32_t) 0x00040000)
-#define GPIO_GPAREN150 ((uint32_t) 0x00080000)
-#define GPIO_GPAREN151 ((uint32_t) 0x00100000)
-#define GPIO_GPAREN152 ((uint32_t) 0x00200000)
-#define GPIO_GPAREN153 ((uint32_t) 0x00400000)
+#define GPIO_GPAREN135 ((uint32_t) 0x00000008)
+#define GPIO_GPAREN136 ((uint32_t) 0x00000010)
+#define GPIO_GPAREN137 ((uint32_t) 0x00000020)
+#define GPIO_GPAREN138 ((uint32_t) 0x00000040)
+#define GPIO_GPAREN139 ((uint32_t) 0x00000080)
+#define GPIO_GPAREN140 ((uint32_t) 0x00000100)
+#define GPIO_GPAREN141 ((uint32_t) 0x00000200)
+#define GPIO_GPAREN142 ((uint32_t) 0x00000400)
+#define GPIO_GPAREN143 ((uint32_t) 0x00000800)
+#define GPIO_GPAREN144 ((uint32_t) 0x00001000)
+#define GPIO_GPAREN145 ((uint32_t) 0x00002000)
+#define GPIO_GPAREN146 ((uint32_t) 0x00004000)
+#define GPIO_GPAREN147 ((uint32_t) 0x00008000)
+#define GPIO_GPAREN148 ((uint32_t) 0x00010000)
+#define GPIO_GPAREN149 ((uint32_t) 0x00020000)
+#define GPIO_GPAREN150 ((uint32_t) 0x00040000)
+#define GPIO_GPAREN151 ((uint32_t) 0x00080000)
+#define GPIO_GPAREN152 ((uint32_t) 0x00100000)
+#define GPIO_GPAREN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Async. Falling Edge Detect 0 Register (RW) */
 #define GPIO_GPAFEN0_OFS (0)
@@ -2852,26 +3488,25 @@ typedef struct {
 #define GPIO_GPAFEN132 ((uint32_t) 0x00000001)
 #define GPIO_GPAFEN133 ((uint32_t) 0x00000002)
 #define GPIO_GPAFEN134 ((uint32_t) 0x00000004)
-#define GPIO_GPAFEN134 ((uint32_t) 0x00000008)
-#define GPIO_GPAFEN135 ((uint32_t) 0x00000010)
-#define GPIO_GPAFEN136 ((uint32_t) 0x00000020)
-#define GPIO_GPAFEN137 ((uint32_t) 0x00000040)
-#define GPIO_GPAFEN138 ((uint32_t) 0x00000080)
-#define GPIO_GPAFEN139 ((uint32_t) 0x00000100)
-#define GPIO_GPAFEN140 ((uint32_t) 0x00000200)
-#define GPIO_GPAFEN141 ((uint32_t) 0x00000400)
-#define GPIO_GPAFEN142 ((uint32_t) 0x00000800)
-#define GPIO_GPAFEN143 ((uint32_t) 0x00001000)
-#define GPIO_GPAFEN144 ((uint32_t) 0x00002000)
-#define GPIO_GPAFEN145 ((uint32_t) 0x00004000)
-#define GPIO_GPAFEN146 ((uint32_t) 0x00008000)
-#define GPIO_GPAFEN147 ((uint32_t) 0x00010000)
-#define GPIO_GPAFEN148 ((uint32_t) 0x00020000)
-#define GPIO_GPAFEN149 ((uint32_t) 0x00040000)
-#define GPIO_GPAFEN150 ((uint32_t) 0x00080000)
-#define GPIO_GPAFEN151 ((uint32_t) 0x00100000)
-#define GPIO_GPAFEN152 ((uint32_t) 0x00200000)
-#define GPIO_GPAFEN153 ((uint32_t) 0x00400000)
+#define GPIO_GPAFEN135 ((uint32_t) 0x00000008)
+#define GPIO_GPAFEN136 ((uint32_t) 0x00000010)
+#define GPIO_GPAFEN137 ((uint32_t) 0x00000020)
+#define GPIO_GPAFEN138 ((uint32_t) 0x00000040)
+#define GPIO_GPAFEN139 ((uint32_t) 0x00000080)
+#define GPIO_GPAFEN140 ((uint32_t) 0x00000100)
+#define GPIO_GPAFEN141 ((uint32_t) 0x00000200)
+#define GPIO_GPAFEN142 ((uint32_t) 0x00000400)
+#define GPIO_GPAFEN143 ((uint32_t) 0x00000800)
+#define GPIO_GPAFEN144 ((uint32_t) 0x00001000)
+#define GPIO_GPAFEN145 ((uint32_t) 0x00002000)
+#define GPIO_GPAFEN146 ((uint32_t) 0x00004000)
+#define GPIO_GPAFEN147 ((uint32_t) 0x00008000)
+#define GPIO_GPAFEN148 ((uint32_t) 0x00010000)
+#define GPIO_GPAFEN149 ((uint32_t) 0x00020000)
+#define GPIO_GPAFEN150 ((uint32_t) 0x00040000)
+#define GPIO_GPAFEN151 ((uint32_t) 0x00080000)
+#define GPIO_GPAFEN152 ((uint32_t) 0x00100000)
+#define GPIO_GPAFEN153 ((uint32_t) 0x00200000)
 
 /* GPIO Pin Pull-up/down Enable Register (W) */
 #define GPIO_GPPUD_PUD_OFS (0)
@@ -2931,26 +3566,25 @@ typedef struct {
 #define GPIO_GPPUDCLK132 ((uint32_t) 0x00000001)
 #define GPIO_GPPUDCLK133 ((uint32_t) 0x00000002)
 #define GPIO_GPPUDCLK134 ((uint32_t) 0x00000004)
-#define GPIO_GPPUDCLK134 ((uint32_t) 0x00000008)
-#define GPIO_GPPUDCLK135 ((uint32_t) 0x00000010)
-#define GPIO_GPPUDCLK136 ((uint32_t) 0x00000020)
-#define GPIO_GPPUDCLK137 ((uint32_t) 0x00000040)
-#define GPIO_GPPUDCLK138 ((uint32_t) 0x00000080)
-#define GPIO_GPPUDCLK139 ((uint32_t) 0x00000100)
-#define GPIO_GPPUDCLK140 ((uint32_t) 0x00000200)
-#define GPIO_GPPUDCLK141 ((uint32_t) 0x00000400)
-#define GPIO_GPPUDCLK142 ((uint32_t) 0x00000800)
-#define GPIO_GPPUDCLK143 ((uint32_t) 0x00001000)
-#define GPIO_GPPUDCLK144 ((uint32_t) 0x00002000)
-#define GPIO_GPPUDCLK145 ((uint32_t) 0x00004000)
-#define GPIO_GPPUDCLK146 ((uint32_t) 0x00008000)
-#define GPIO_GPPUDCLK147 ((uint32_t) 0x00010000)
-#define GPIO_GPPUDCLK148 ((uint32_t) 0x00020000)
-#define GPIO_GPPUDCLK149 ((uint32_t) 0x00040000)
-#define GPIO_GPPUDCLK150 ((uint32_t) 0x00080000)
-#define GPIO_GPPUDCLK151 ((uint32_t) 0x00100000)
-#define GPIO_GPPUDCLK152 ((uint32_t) 0x00200000)
-#define GPIO_GPPUDCLK153 ((uint32_t) 0x00400000)
+#define GPIO_GPPUDCLK135 ((uint32_t) 0x00000008)
+#define GPIO_GPPUDCLK136 ((uint32_t) 0x00000010)
+#define GPIO_GPPUDCLK137 ((uint32_t) 0x00000020)
+#define GPIO_GPPUDCLK138 ((uint32_t) 0x00000040)
+#define GPIO_GPPUDCLK139 ((uint32_t) 0x00000080)
+#define GPIO_GPPUDCLK140 ((uint32_t) 0x00000100)
+#define GPIO_GPPUDCLK141 ((uint32_t) 0x00000200)
+#define GPIO_GPPUDCLK142 ((uint32_t) 0x00000400)
+#define GPIO_GPPUDCLK143 ((uint32_t) 0x00000800)
+#define GPIO_GPPUDCLK144 ((uint32_t) 0x00001000)
+#define GPIO_GPPUDCLK145 ((uint32_t) 0x00002000)
+#define GPIO_GPPUDCLK146 ((uint32_t) 0x00004000)
+#define GPIO_GPPUDCLK147 ((uint32_t) 0x00008000)
+#define GPIO_GPPUDCLK148 ((uint32_t) 0x00010000)
+#define GPIO_GPPUDCLK149 ((uint32_t) 0x00020000)
+#define GPIO_GPPUDCLK150 ((uint32_t) 0x00040000)
+#define GPIO_GPPUDCLK151 ((uint32_t) 0x00080000)
+#define GPIO_GPPUDCLK152 ((uint32_t) 0x00100000)
+#define GPIO_GPPUDCLK153 ((uint32_t) 0x00200000)
 
 /* GPIO Pads control bits */
 /* GPIO Pads 0-27 Control register */
