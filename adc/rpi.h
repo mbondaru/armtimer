@@ -112,7 +112,8 @@ typedef enum IRQn
 #define CM_BASE ((uint32_t) PERIPH_BASE + 0x00101000)
 
 /* GPIO Pads drive control */
-#define GPIO_PADS_CTL_BASE ((uint32_t) PERIPH_BASE + 0x00100000)
+//#define GPIO_PADS_CTL_BASE ((uint32_t) PERIPH_BASE + 0x00100000)
+// Moved to PWRMAN_BASE
 
 #define SMI_BASE ((uint32_t) PERIPH_BASE + 0x00600000)
 
@@ -133,7 +134,8 @@ typedef enum IRQn
 #define DSI_BASE ((uint32_t) PERIPH_BASE + 0x00209000)
 /* Peripheral register definitions */
 /* Device specific Peripheral register structures */
-#define ISP_BASE ((uint32_t) PERIPH_BASE + 0x00003000)
+#define ISP_BASE ((uint32_t) PERIPH_BASE + 0x00C75000)
+#define PWRMAN_BASE ((uint32_t) PERIPH_BASE + 0x00100000)
 
 typedef struct {
    __IO uint32_t CTRL;
@@ -690,13 +692,45 @@ typedef struct {
 } GPIO_Type;
 
 typedef struct {
-   /* 0x2C bytes for */
-   /* Page aligned boundary to start at PERIPH_BASE + 0x00100000 */
-   __IO uint32_t RESERVED[11];
-   __IO uint32_t PADS0_27;
-   __IO uint32_t PADS28_45;
-   __IO uint32_t PADS46_53;   
-} GPIO_Pads_Control_Type;
+   __IO uint32_t GNRIC;
+   __IO uint32_t AUDIO;
+   __IO uint32_t RESERVED0[4];
+   __IO uint32_t STATUS;
+   __IO uint32_t RSTC;
+   __IO uint32_t RSTS;
+   __IO uint32_t WDOG;
+   __IO uint32_t PADS0; //GPIO 0-27
+   __IO uint32_t PADS2; //GPIO 28-45
+   __IO uint32_t PADS3;  //GPIO 45-53 
+   __IO uint32_t PADS4;
+   __IO uint32_t PADS5;
+   __IO uint32_t PADS6;
+   __IO uint32_t RESERVED1;
+   __IO uint32_t CAM0;
+   __IO uint32_t CAM1;
+   __IO uint32_t CCP2TX;
+   __IO uint32_t DSI0;
+   __IO uint32_t DSI1;
+   __IO uint32_t HDMI;
+   __IO uint32_t USB;
+   __IO uint32_t PXLD0;
+   __IO uint32_t PXBG;
+   __IO uint32_t DFT;
+   __IO uint32_t SMPS;
+   __IO uint32_t XOSC;
+   __IO uint32_t SPAREW;
+   __IO uint32_t SPARER;
+   __IO uint32_t AVS_RSTDR;
+   __IO uint32_t AVS_STAT;
+   __IO uint32_t AVS_EVENT;
+   __IO uint32_t AVS_INTEN;
+   __IO uint32_t RESERVED2[28];
+   __IO uint32_t DUMMY;
+   __IO uint32_t RESERVED3[2];
+   __IO uint32_t IMAGE;
+   __IO uint32_t GRAFX;
+   __IO uint32_t PROC;
+} Power_Manager_Type;
 
 typedef struct {
    /*Generic Clock Control */
