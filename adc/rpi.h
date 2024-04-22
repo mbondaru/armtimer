@@ -136,6 +136,15 @@ typedef enum IRQn
 /* Device specific Peripheral register structures */
 #define ISP_BASE ((uint32_t) PERIPH_BASE + 0x00C75000)
 #define PWRMAN_BASE ((uint32_t) PERIPH_BASE + 0x00100000)
+#define ARMCTL_BASE ((uint32_t) PERIPH_BASE + 0x0000B000)
+/* ARM JTAG BASH */
+#define AJB_BASE ((uint32_t) PERIPH_BASE + 0x002000C0)
+typedef struct {
+   __IO uint32_t AJBCONF;
+   __IO uint32_t AJBTMS;
+   __IO uint32_t AJBTDI;
+   __IO uint32_t AJBTDO;
+} ARM_JTAG_BASH_Type;
 
 typedef struct {
    __IO uint32_t CTRL;
@@ -982,6 +991,156 @@ typedef struct {
    uint32_t RESERVED1;
 } DMA_Control_Block_Type;
 
+typedef struct {
+   __IO uint32_t CONTROL0;
+   __IO uint32_t RESERVED0[2];
+   __IO uint32_t ID_SECURE;
+   __IO uint32_t RESERVED1[60];
+   __IO uint32_t TRANSLATE[32];
+   __IO uint32_t RESERVED2[32];
+   __IO uint32_t IRQ_PEND0;
+   __IO uint32_t IRQ_PEND1;
+   __IO uint32_t IRQ_PEND2;
+   __IO uint32_t IRQ_FAST;
+   __IO uint32_t IRQ_ENBL1;
+   __IO uint32_t IRQ_ENBL2;
+   __IO uint32_t IRQ_ENBL3;
+   __IO uint32_t IRQ_DIBL1;
+   __IO uint32_t IRQ_DIBL2;
+   __IO uint32_t IRQ_DIBL3;
+   __IO uint32_t RESERVED3[118];
+   __IO uint32_t T_LOAD;
+   __IO uint32_t T_VALUE;
+   __IO uint32_t T_CONTROL;
+   __IO uint32_t T_IRQCNTL;
+   __IO uint32_t T_RAWIRQ;
+   __IO uint32_t T_MSKIRQ;
+   __IO uint32_t T_RELOAD;
+   __IO uint32_t T_PREDIV;
+   __IO uint32_t T_FREECNT;
+   __IO uint32_t RESERVED4[7];
+   __IO uint32_t CONTROL1;
+   __IO uint32_t STATUS;
+   __IO uint32_t ERRHALT;
+   __IO uint32_t ID;
+   __IO uint32_t RESERVED5[247];
+   __IO uint32_t ARM_0_SEM0;
+   __IO uint32_t ARM_0_SEM1;
+   __IO uint32_t ARM_0_SEM2;
+   __IO uint32_t ARM_0_SEM3;
+   __IO uint32_t ARM_0_SEM4;
+   __IO uint32_t ARM_0_SEM5;
+   __IO uint32_t ARM_0_SEM6;
+   __IO uint32_t ARM_0_SEM7;
+   __IO uint32_t RESERVED6[8];
+   __IO uint32_t ARM_0_BELL0;
+   __IO uint32_t ARM_0_BELL1;
+   __IO uint32_t ARM_0_BELL2;
+   __IO uint32_t ARM_0_BELL3;
+   __IO uint32_t RESERVED7[12];
+   __IO uint32_t ARM_0_MAIL0_RDWRT[4];
+   __IO uint32_t ARM_0_MAIL0_POL;
+   __IO uint32_t ARM_0_MAIL0_SND;
+   __IO uint32_t ARM_0_MAIL0_STA;
+   __IO uint32_t ARM_0_MAIL0_CNF;
+   __IO uint32_t ARM_0_MAIL1_WRT[4]; //Do not Use
+   __IO uint32_t ARM_0_MAIL1_POL; //Do not Use
+   __IO uint32_t ARM_0_MAIL1_SND; //Do not Use
+   __IO uint32_t ARM_0_MAIL1_STA;
+   __IO uint32_t ARM_0_MAIL1_CNF; //Do not Use
+   __IO uint32_t RESERVED8[8];
+   __IO uint32_t ARM_0_SEMCLRDBG;
+   __IO uint32_t ARM_0_BELLCLRDBG;
+   __IO uint32_t RESERVED9[4];
+   __IO uint32_t ARM_0_ALL_IRQS;
+   __IO uint32_t ARM_0_MY_IRQS;
+   __IO uint32_t ARM_1_SEM0;
+   __IO uint32_t ARM_1_SEM1;
+   __IO uint32_t ARM_1_SEM2;
+   __IO uint32_t ARM_1_SEM3;
+   __IO uint32_t ARM_1_SEM4;
+   __IO uint32_t ARM_1_SEM5;
+   __IO uint32_t ARM_1_SEM6;
+   __IO uint32_t ARM_1_SEM7;
+   __IO uint32_t RESERVED10[8];
+   __IO uint32_t ARM_1_BELL0;
+   __IO uint32_t ARM_1_BELL1;
+   __IO uint32_t ARM_1_BELL2;
+   __IO uint32_t ARM_1_BELL3;
+   __IO uint32_t RESERVED11[12];
+   __IO uint32_t ARM_1_MAIL0_RDWRT[4];
+   __IO uint32_t ARM_1_MAIL0_POL; //Do not Use
+   __IO uint32_t ARM_1_MAIL0_SND; //Do not Use
+   __IO uint32_t ARM_1_MAIL0_STA;
+   __IO uint32_t ARM_1_MAIL0_CNF; //Do not Use
+   __IO uint32_t ARM_1_MAIL1_RDWRT[4];
+   __IO uint32_t ARM_1_MAIL1_POL;
+   __IO uint32_t ARM_1_MAIL1_SND;
+   __IO uint32_t ARM_1_MAIL1_STA;
+   __IO uint32_t ARM_1_MAIL1_CNF;
+   __IO uint32_t RESERVED12[8];
+   __IO uint32_t ARM_1_SEMCLRDBG;
+   __IO uint32_t ARM_1_BELLCLRDBG;
+   __IO uint32_t RESERVED13[4];
+   __IO uint32_t ARM_1_ALL_IRQS;
+   __IO uint32_t ARM_1_MY_IRQS;
+   __IO uint32_t ARM_2_SEM0;
+   __IO uint32_t ARM_2_SEM1;
+   __IO uint32_t ARM_2_SEM2;
+   __IO uint32_t ARM_2_SEM3;
+   __IO uint32_t ARM_2_SEM4;
+   __IO uint32_t ARM_2_SEM5;
+   __IO uint32_t ARM_2_SEM6;
+   __IO uint32_t ARM_2_SEM7;
+   __IO uint32_t RESERVED14[8];
+   __IO uint32_t ARM_2_BELL0;
+   __IO uint32_t ARM_2_BELL1;
+   __IO uint32_t ARM_2_BELL2;
+   __IO uint32_t ARM_2_BELL3;
+   __IO uint32_t RESERVED15[12];
+   __IO uint32_t ARM_2_MAIL0_RDWRT[4];
+   __IO uint32_t ARM_2_MAIL0_POL; // Do not Use
+   __IO uint32_t ARM_2_MAIL0_SND; // Do not Use
+   __IO uint32_t ARM_2_MAIL1_STA;
+   __IO uint32_t ARM_2_MAIL1_CNF; // Do not use
+   __IO uint32_t RESERVED16[8];
+   __IO uint32_t ARM_2_SEMCLRDBG;
+   __IO uint32_t ARM_2_BELLCLRDBG;
+   __IO uint32_t RESERVED17[4];
+   __IO uint32_t ARM_2_ALL_IRQS;
+   __IO uint32_t ARM_2_MY_IRQS;
+   __IO uint32_t ARM_3_SEM0;
+   __IO uint32_t ARM_3_SEM1;
+   __IO uint32_t ARM_3_SEM2;
+   __IO uint32_t ARM_3_SEM3;
+   __IO uint32_t ARM_3_SEM4;
+   __IO uint32_t ARM_3_SEM5;
+   __IO uint32_t ARM_3_SEM6;
+   __IO uint32_t ARM_3_SEM7;
+   __IO uint32_t RESERVED18[8];
+   __IO uint32_t ARM_3_BELL0;
+   __IO uint32_t ARM_3_BELL1;
+   __IO uint32_t ARM_3_BELL2;
+   __IO uint32_t ARM_3_BELL3;
+   __IO uint32_t RESERVED19[12];
+   __IO uint32_t ARM_3_MAIL0_RDWRT[4];
+   __IO uint32_t ARM_3_MAIL0_POL; // Do not Use
+   __IO uint32_t ARM_3_MAIL0_SND; // Do not Use
+   __IO uint32_t ARM_3_MAIL0_STA;
+   __IO uint32_t ARM_3_MAIL0_CNF; // Do not Use
+   __IO uint32_t ARM_3_MAIL1_RDWRT[4];
+   __IO uint32_t ARM_3_MAIL1_POL; //Do not use
+   __IO uint32_t ARM_3_MAIL1_SND; //Do not use
+   __IO uint32_t ARM_3_MAIL1_STA;
+   __IO uint32_t ARM_3_MAIL1_CNF; // Do not use
+   __IO uint32_t RESERVED20[8];
+   __IO uint32_t ARM_3_SEMCLRDBG;
+   __IO uint32_t ARM_3_BELLCLRDBG;
+   __IO uint32_t RESERVED21[4];
+   __IO uint32_t ARM_3_ALL_IRQS;
+   __IO uint32_t ARM_3_MY_IRQS;
+} ARM_Control_Type;
+   
 typedef struct {
    /* 0x200 bytes for */
    /* Page aligned boundary to start at PERIPH_BASE + 0x0000B000) */
