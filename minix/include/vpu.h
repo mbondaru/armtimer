@@ -493,10 +493,18 @@ typedef struct {
   __IO uint32_t SMPS_CTLC3R;
   __IO uint32_t SMPS_LDO0R;
   __IO uint32_t SMPS_LDO1R;
-  __IO uint32_t RESERVED13[10];
-  __IO uint32_t PLLA_CTRLR;
+  __IO uint32_t RESREVED13[2];
+  __IO uint32_t PLLB_DIG0R;
+  __IO uint32_t PLLB_DIG1R;
+  __IO uint32_t PLLB_DIG2R;
+  __IO uint32_t PLLB_DIG3R;
+  __IO uint32_t PLLB_ANA0R;
+  __IO uint32_t PLLB_ANA1R;
+  __IO uint32_t PLLB_ANA2R;
+  __IO uint32_t PLLB_ANA3R;
+  __IO uint32_t PLLA_CTRLR;   //900
   __IO uint32_t RESERVED14[3];
-  __IO uint32_t PLLA_ANA_SSCSR;
+  __IO uint32_t PLLA_ANA_SSCSR; 
   __IO uint32_t RESERVED14[3];
   __IO uint32_t PLLC_CTRLR;
   __IO uint32_t RESERVED14[3];
@@ -509,16 +517,24 @@ typedef struct {
   __IO uint32_t PLLH_CTRLR;
   __IO uint32_t RESERVED14[7];
   __IO uint32_t HDMI_CTL_RCALR;
-  __IO uint32_t RESERVED14[11];
+  __IO uint32_t RESERVED14[3];
+  __IO uint32_t XOSC_CTRLR;
+  __IO uint32_t RESERVED14[3];
   __IO uint32_t SMPS_A_MODER;
   __IO uint32_t RESERVED14[3];
   __IO uint32_t SMPS_B_STATR;
   __IO uint32_t RESERVED14[3];
+  __IO uint32_t SMPS_C_CLKR;
+  __IO uint32_t RESERVED14[3];
   __IO uint32_t SMPS_L_SPVR;
   __IO uint32_t RESERVED14[3];
   __IO uint32_t PLLB_CTRLR;
-  __IO uint32_t RESERVED14[7];
-  __IO uint32_t PLLA_FRACR;
+  __IO uint32_t RESERVED14[3];
+  __IO uint32_t PLLB_ANA_SSCSR;
+  __IO uint32_t RESERVED14[3];
+
+
+  __IO uint32_t PLLA_FRACR;  //A00
   __IO uint32_t RESERVED15[3];
   __IO uint32_t PLLA_ANA_SSCLR;
   __IO uint32_t RESERVED15[3];
@@ -533,16 +549,22 @@ typedef struct {
   __IO uint32_t PLLH_FRACR;
   __IO uint32_t RESERVED15[7];
   __IO uint32_t HDMI_CTL_HFENR;
-  __IO uint32_t RESERVED15[11];
-  __IO uint32_t SMPS_A_VOLTSR;
   __IO uint32_t RESERVED15[3];
+  __IO uint32_t XOSC_CPRR;
+  __IO uint32_t RESERVED15[3];
+  __IO uint32_t SMPS_A_VOLTSR;
+  __IO uint32_t RESERVED15[7];
   __IO uint32_t SMPS_C_CTLR;
   __IO uint32_t RESERVED15[3];
   __IO uint32_t SMPS_L_SPAR;
   __IO uint32_t RESERVED15[3];
   __IO uint32_t PLLB_FRACR;
-  __IO uint32_t RESERVED15[7];
-  __IO uint32_t PLLA_DSI0R;
+  __IO uint32_t RESERVED15[3];
+  __IO uint32_t PLLB_ANA_SSCLR;
+  __IO uint32_t RESERVED15[3];
+
+
+  __IO uint32_t PLLA_DSI0R;  // B00
   __IO uint32_t RESERVED16[3];
   __IO uint32_t PLLA_ANA_KAIPR;
   __IO uint32_t RESERVED16[3];
@@ -557,14 +579,20 @@ typedef struct {
   __IO uint32_t PLLH_AUXR;
   __IO uint32_t RESERVED16[3];
   __IO uint32_t PLLH_ANA_KAIPR;
-  __IO uint32_t RESERVED16[19];
-  __IO uint32_t SMPS_A_GAINR;
+  __IO uint32_t RESERVED16[7];
+  __IO uint32_t XOSC_BIASR;
   __IO uint32_t RESERVED16[3];
+  __IO uint32_t SMPS_A_GAINR;
+  __IO uint32_t RESERVED16[11];
   __IO uint32_t SMPS_L_SCVR;
   __IO uint32_t RESERVED16[3];
   __IO uint32_t PLLB_ARMR;
-  __IO uint32_t RESERVED16[7];
-  __IO uint32_t PLLA_CORER;
+  __IO uint32_t RESERVED16[3];
+  __IO uint32_t PLLB_ANA_KAIPR;
+  __IO uint32_t RESERVED16[3];
+ 
+
+  __IO uint32_t PLLA_CORER;    //C00
   __IO uint32_t RESERVED17[3];
   __IO uint32_t PLLA_ANA_STATR;
   __IO uint32_t RESERVED17[3];
@@ -577,12 +605,18 @@ typedef struct {
   __IO uint32_t PLLD_ANA_STATR;
   __IO uint32_t RESERVED17[3];
   __IO uint32_t PLLH_RCALR;
-  __IO uint32_t RESERVED17[29];
+  __IO uint32_t RESERVED17[11];
+  __IO uint32_t XOSC_PWRR;
+  __IO uint32_t RESERVED17[15];
   __IO uint32_t SMPS_L_SCAR;
   __IO uint32_t RESERVED17[3];
   __IO uint32_t PLLB_SP0R;
-  __IO uint32_t RESERVED17[7];
-  __IO uint32_t PLLA_PERR;
+  __IO uint32_t RESERVED17[3];
+  __IO uint32_t PLLB_ANA_STATR;
+  __IO uint32_t RESERVED17[3];
+
+
+  __IO uint32_t PLLA_PERR;      //D00
   __IO uint32_t RESERVED18[3];
   __IO uint32_t PLLA_ANA_SCTLR;
   __IO uint32_t RESERVED18[3];
@@ -601,8 +635,12 @@ typedef struct {
   __IO uint32_t SMPS_L_SIVR;
   __IO uint32_t RESERVED18[3];
   __IO uint32_t PLLB_SP1R;
-  __IO uint32_t RESERVED18[7];
-  __IO uint32_t PLLA_CCP2R;
+  __IO uint32_t RESERVED18[3];
+  __IO uint32_t PLLB_ANA_SCTLR;
+  __IO uint32_t RESERVED18[3];
+
+
+  __IO uint32_t PLLA_CCP2R;     //E00
   __IO uint32_t RESERVED19[3];
   __IO uint32_t PLLA_ANA_VCOR;
   __IO uint32_t RESERVED19[3];
@@ -621,8 +659,12 @@ typedef struct {
   __IO uint32_t SMPS_L_SIAR;
   __IO uint32_t RESERVED19[3];
   __IO uint32_t PLLB_SP2R;
-  __IO uint32_t RESERVED19[7];
-  __IO uint32_t PLLA_MULTI;
+  __IO uint32_t RESERVED19[3];
+  __IO uint32_t PLLB_ANA_VCOR;
+  __IO uint32_t RESERVED19[3];
+
+
+  __IO uint32_t PLLA_MULTI;    //F00
   __IO uint32_t RESERVED20[3];
   __IO uint32_t PLLA_ANA_MULTI;
   __IO uint32_t RESERVED20[3];
@@ -639,19 +681,22 @@ typedef struct {
   __IO uint32_t PLLH_ANA_MULTI;
   __IO uint32_t RESERVED20[3];
   __IO uint32_t HDMI_CTL_MULTI;
-  __IO uint32_t RESERVED20[7];
-  __IO uint32_t SMPS_A_MULTI;
+  __IO uint32_t RESERVED20[3];
+  __IO uint32_t XOSC_MULTI;
+  __IO uint32_t RESERVED20[3];
+  __IO uint32_t SMPS_A_MULTI; 
   __IO uint32_t RESERVED20[3];
   __IO uint32_t SMPS_B_MULTI;
   __IO uint32_t RESERVED20[3];
   __IO uint32_t SMPS_C_MULTI;
   __IO uint32_t RESERVED20[3];
   __IO uint32_t SMPS_L_MULTI;
-  __IO uint32_t RESERVED[3];
+  __IO uint32_t RESERVED20[3];
   __IO uint32_t PLLB_MULTI;
-  _
-  __
+  __IO uint32_t RESERVED20[3];
+  __IO uint32_t PLLB_ANA_MULTI;
 } A2W_Type;
+
 typedef struct {
   __IO uint32_t ADDR_REV_ID;
   __IO uint32_t ADDR_DLL_RESET;
@@ -691,6 +736,7 @@ typedef struct {
   __IO uint32_t ADDR_SPR1_RO;
   __IO uint32_t ADDR_SPR_RO;
 } SDRAM_APHY_Type;
+
 typedef struct {
   __IO uint32_t GLBL_DQ_REV_ID;
   __IO uint32_t GLBL_DQ_DLL_RESET;
