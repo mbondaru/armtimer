@@ -4,10 +4,33 @@
 #define PM_KEY ((uint32_t) 0x5A000000)
 #define CM_KEY ((uint32_t) 0x5A000000)
 #define A2W_KEY ((uint32_t) 0x5A000000)
-
-int sdram_init(void)
+void uart_init(void)
 {
-  uint32_t cpuid, m, vendor_id, bc, mem_size;
+  int i = 0;
+  GPIO->GPFSEL1 = GPIO->GPFSEL1 & ~((7 << 12) | (7 << 15));
+  GPIO->GPFSEL1 = GPIO->GPFSEL1 | (2 << 12) | (2 << 15);
+  GPIO->GPPUD = 0;
+  udelay(150);
+  for(i = 0; i < 150; i++);
+  GPIO->GPPUDCLK0 = (1 << 14) | (1 << 15);
+  for(i = 0; i < 150; i++);
+  udelay(150);
+  GPIO->GPPUDCLK0 = 0; 
+
+  AUX->AUX_ENABLES = 1;
+  AUX->AUX_MU_IER_REG = 0;
+  AUX->AUX_MU_CNTL_REG = 0;
+  AUX->AUX_MU_LCR_REG = 3;
+  AUX->AUX_MU_MCR_REG = 0;
+  AUX->AUX_MU_IER_REG = 0;
+  AUX->AUX_MU_IIR_REG = 0xC6;
+  AUX->AUX_MU_BAUD_REG = ((100000000/(115200*8)) - 1);
+  AUX->AUX_MU_LCR_REG = 0x03;
+  AUX->AUX_MU_CNTL_REG = 3;
+}
+void sdram_init(void)
+{
+  uint32_t cpuid, m, vendor_id, bc, memsize;
   int colbits, rowbits, banklow;
 
   PWRMAN->SMPS = PM_KEY | 0x1; //PM_SMPS_CTRLEN;
@@ -41,7 +64,7 @@ int sdram_init(void)
   DPHYCSR->BOOT_READ_DQS_GATE_CTRL = 0x11;
 
   /* Reset PHY DLL */
-  APHYCSR->BIST_CNTVRL_SPR = 0x30;
+  APHYCSR->PHY_BIST_CNTRL_SPR = 0x30;
 
   DPHYCSR->GLBL_DQ_DLL_RESET = 0x1;
   APHYCSR->GLBL_ADDR_DLL_RESET = 0x1;
@@ -157,13 +180,15 @@ int sdram_init(void)
 		  break;
 	  case 0x10:
 		  memsize = 128;
-		  break
+		  break;
 	  default:
 	          memsize = 0;
   }
   if(memsize == 0)
   {
-    return -1;
+    AUX->AUX_MU_IO_REG = 'x';
+    while(!(AUX->AUX_MU_LSR_REG & (1 << 6)));
+    return;
   }	  
   /* Enable high-frequency SDRAM PLL */  
   SDRAMCTL->CS = (SDRAMCTL->CS & ~(0x00040000 | 0x00000004 | 
@@ -223,7 +248,7 @@ int sdram_init(void)
   SDRAMCTL->MRT = 0x3;
 
   /* Reset PHY DLL */
-  APHYCSR->BIST_CNTVRL_SPR = 0x30;
+  APHYCSR->PHY_BIST_CNTRL_SPR = 0x30;
 
   DPHYCSR->GLBL_DQ_DLL_RESET = 0x1;
   APHYCSR->GLBL_ADDR_DLL_RESET = 0x1;
@@ -247,5 +272,19 @@ int sdram_init(void)
 }
 void main(void)
 {
-  
+  uint32_t *ptr = (uint32_t *) 0xC0000000;
+  uart_init();
+  sdram_init();
+  char c = 't';
+  *ptr = c;
+
+  AUX->AUX_MU_IO_REG = *ptr;
+  while(!(AUX->AUX_MU_LSR_REG & (1 << 6)));
+
+  ptr = (uint32_t *) 0xFFFFFFFC;
+  *ptr = c;
+  AUX->AUX_MU_IO_REG = *ptr;
+  while(!(AUX->AUX_MU_LSR_REG & (1 << 6)));
+
+  while(1);
 }
