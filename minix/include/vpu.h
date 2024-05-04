@@ -2361,12 +2361,12 @@ typedef struct {
 #define DMA_CH15 ((DMA_Channel_Type *) DMA15_BASE)
 
 #define GPIO ((GPIO_Type *) GPIO_BASE)
-#define SYS_TMR ((SysTimer_Type *) SYS_TMR_BASE)
-#define ARM_TMR ((ARMTimer_Type *) ARM_TMR_BASE)
+#define SYSTMR ((SysTimer_Type *) SYS_TMR_BASE)
+#define ARMTMR ((ARMTimer_Type *) ARM_TMR_BASE)
 #define AUX ((AUX_Type *) AUX_BASE)
 #define SPI ((SPI_Type *) SPI_BASE)
 #define PWM ((PWM_Type* ) PWM_BASE)
-#define IRQ_CTLS ((Interrupt_Controller_Type *) IRQ_BASE)
+#define IRQCTLS ((Interrupt_Controller_Type *) IRQ_BASE)
 #define CM ((CM_Type *) CM_BASE)
 #define PADS ((GPIO_Pads_Control_Type *) GPIO_PADS_CTL_BASE)
 #define ARMCTL ((ARM_Control_Logic_Module_Type *) LOCAL_PERIPH_BASE) 
@@ -2385,8 +2385,8 @@ typedef struct {
 #define SDRAMCTL ((SDRAM_Controller_Type *) SD_BASE)
 #define MULTICORE ((Multicore_Sync_Type *) MS_BASE)
 #define SDHOST ((SD_Host_Type *) SH_BASE)
-#define DPHY_CSR ((SDRAM_DPHY_Type *) DPHY_CSR_BASE)
-#define APHY_CSR ((SDRAM_APHY_Type *) APHY_CSR_BASE)
+#define DPHYCSR ((SDRAM_DPHY_Type *) DPHY_CSR_BASE)
+#define APHYCSR ((SDRAM_APHY_Type *) APHY_CSR_BASE)
 #define A2W ((A2W_Type *) A2W_BASE)
 
 /* Peripheral register control bits */
@@ -4801,6 +4801,15 @@ typedef struct {
 /* Password (0x5A) bits (RW) */
 #define GPIO_PADS46_53_PASSWD_OFS (24)
 #define GPIO_PADS46_53_PASSWD_MASK ((uint32_t) 0xFF000000)
+
+
+/* PM Bits */
+#define PM_PASSWORD ((uint32_t) 0x5A000000)
+/* PM GNRIC Register */
+#define PM_GNRIC_POWUP_OFS (0)
+#define PM_GNRIC_POWUP_MASK ((uint32_t) 0x00000001)
+#define PM_GNRIC_POWOK_OFS (1)
+#define PM_GNRIC_POWOK_MASK ((uint32_t) 0x00000002)
 
 /* CM Bits */
 /* Clock Manager General Purpose Clocks Control Register 0 (RW) */
